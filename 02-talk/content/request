@@ -1,0 +1,15 @@
+POST /send_message.php HTTP/1.1
+Host: 192.168.1.117
+Content-Length: 13
+X-Requested-With: XMLHttpRequest
+Accept-Language: es-419,es;q=0.9
+Accept: */*
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36
+Origin: http://192.168.1.117
+Referer: http://192.168.1.117/home.php
+Accept-Encoding: gzip, deflate, br
+Cookie: PHPSESSID=pabh70lknuir59i396l0c2ujjn
+Connection: keep-alive
+
+msg=fdsa&id=1

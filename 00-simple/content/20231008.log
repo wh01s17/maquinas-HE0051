@@ -1,0 +1,56 @@
+PS C:\> dir \\127.0.0.1\WEB
+Acceso denegado
+At line:1 char:1
++ dir \\127.0.0.1\WEB
++ ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : PermissionDenied: (\\127.0.0.1\WEB:String) [Get-ChildItem], UnauthorizedAccessException
+    + FullyQualifiedErrorId : ItemExistsUnauthorizedAccessError,Microsoft.PowerShell.Commands.GetChildItemCommand
+Cannot find path '\\127.0.0.1\WEB' because it does not exist.
+At line:1 char:1
++ dir \\127.0.0.1\WEB
++ ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (\\127.0.0.1\WEB:String) [Get-ChildItem], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetChildItemCommand
+
+PS C:\> net use \\127.0.0.1\WEB
+Se ha completado el comando correctamente.
+
+PS C:\> dir \\127.0.0.1\WEB
+Acceso denegado
+At line:1 char:1
++ dir \\127.0.0.1\WEB
++ ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : PermissionDenied: (\\127.0.0.1\WEB:String) [Get-ChildItem], UnauthorizedAccessException
+    + FullyQualifiedErrorId : ItemExistsUnauthorizedAccessError,Microsoft.PowerShell.Commands.GetChildItemCommand
+Cannot find path '\\127.0.0.1\WEB' because it does not exist.
+At line:1 char:1
++ dir \\127.0.0.1\WEB
++ ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (\\127.0.0.1\WEB:String) [Get-ChildItem], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetChildItemCommand
+
+PS C:\> net use \\127.0.0.1\WEB /user:marcos SuperPassword
+Se ha completado el comando correctamente.
+
+PS C:\> dir \\127.0.0.1\WEB
+
+    Directorio: \\127.0.0.1\WEB
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----        10/8/2023   9:46 PM                aspnet_client
+-a----        9/26/2023   6:46 PM            703 iisstart.htm
+-a----        10/8/2023  10:46 PM            158 test.php
+
+PS C:\> rm \\127.0.0.1\WEB\*.php
+
+PS C:\> dir \\127.0.0.1\WEB
+
+    Directorio: \\127.0.0.1\WEB
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----        10/8/2023   9:46 PM                aspnet_client
+-a----        9/26/2023   6:46 PM            703 iisstart.htm
+
+PS C:\> 
