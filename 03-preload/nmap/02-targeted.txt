@@ -1,0 +1,18 @@
+# Nmap 7.97 scan initiated Thu Jul 24 23:16:41 2025 as: nmap -sCV -p 22,80,5000 -oN 02-targeted.txt 192.168.1.151
+Nmap scan report for 192.168.1.151
+Host is up (0.00043s latency).
+
+PORT     STATE SERVICE    VERSION
+22/tcp   open  ssh        OpenSSH 8.4p1 Debian 5 (protocol 2.0)
+| ssh-hostkey: 
+|   3072 4f:4c:82:94:2b:99:f8:ea:67:ff:67:3c:06:8a:71:b5 (RSA)
+|   256 c4:2c:9b:c8:12:93:2f:8a:f1:57:1c:f6:ab:88:b9:61 (ECDSA)
+|_  256 10:18:7b:11:c4:c3:d4:1a:54:cc:18:68:14:bb:2e:a7 (ED25519)
+80/tcp   open  http       nginx 1.18.0
+|_http-server-header: nginx/1.18.0
+|_http-title: Welcome to nginx!
+5000/tcp open  landesk-rc LANDesk remote management
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Thu Jul 24 23:16:54 2025 -- 1 IP address (1 host up) scanned in 12.80 seconds

