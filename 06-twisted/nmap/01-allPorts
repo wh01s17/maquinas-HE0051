@@ -1,0 +1,4 @@
+# Nmap 7.97 scan initiated Wed Jul 30 15:10:37 2025 as: nmap -p- -sS --min-rate 5000 -n -Pn -oG 01-allPorts 192.168.1.66
+Host: 192.168.1.66 ()	Status: Up
+Host: 192.168.1.66 ()	Ports: 80/open/tcp//http///, 2222/open/tcp//EtherNetIP-1///	Ignored State: closed (65533)
+# Nmap done at Wed Jul 30 15:10:38 2025 -- 1 IP address (1 host up) scanned in 1.27 seconds
