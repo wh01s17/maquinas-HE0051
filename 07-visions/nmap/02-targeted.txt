@@ -1,0 +1,17 @@
+# Nmap 7.97 scan initiated Thu Jul 31 15:24:31 2025 as: nmap -sCV -p 22,80 -oN 02-targeted.txt 192.168.1.119
+Nmap scan report for 192.168.1.119
+Host is up (0.00031s latency).
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 85:d0:93:ff:b6:be:e8:48:a9:2c:86:4c:b6:84:1f:85 (RSA)
+|   256 5d:fb:77:a5:d3:34:4c:46:96:b6:28:a2:6b:9f:74:de (ECDSA)
+|_  256 76:3a:c5:88:89:f2:ab:82:05:80:80:f9:6c:3b:20:9d (ED25519)
+80/tcp open  http    nginx 1.14.2
+|_http-title: Site doesn't have a title (text/html).
+|_http-server-header: nginx/1.14.2
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Thu Jul 31 15:24:38 2025 -- 1 IP address (1 host up) scanned in 7.21 seconds
