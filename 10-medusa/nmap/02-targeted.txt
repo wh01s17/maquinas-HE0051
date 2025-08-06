@@ -1,0 +1,18 @@
+# Nmap 7.97 scan initiated Wed Aug  6 15:03:06 2025 as: nmap -sCV -p 21,22,80 -oN 02-targeted.txt 192.168.1.18
+Nmap scan report for 192.168.1.18
+Host is up (0.00037s latency).
+
+PORT   STATE SERVICE VERSION
+21/tcp open  ftp     vsftpd 3.0.3
+22/tcp open  ssh     OpenSSH 8.4p1 Debian 5+deb11u1 (protocol 2.0)
+| ssh-hostkey: 
+|   3072 70:d4:ef:c9:27:6f:8d:95:7a:a5:51:19:51:fe:14:dc (RSA)
+|   256 3f:8d:24:3f:d2:5e:ca:e6:c9:af:37:23:47:bf:1d:28 (ECDSA)
+|_  256 0c:33:7e:4e:95:3d:b0:2d:6a:5e:ca:39:91:0d:13:08 (ED25519)
+80/tcp open  http    Apache httpd 2.4.54 ((Debian))
+|_http-title: Apache2 Debian Default Page: It works
+|_http-server-header: Apache/2.4.54 (Debian)
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Wed Aug  6 15:03:17 2025 -- 1 IP address (1 host up) scanned in 10.65 seconds

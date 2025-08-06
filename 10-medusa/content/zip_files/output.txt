@@ -1,0 +1,1345 @@
+{
+    "lsass.DMP": {
+        "errors": [],
+        "logon_sessions": {
+            "996": {
+                "authentication_id": 996,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "WORKGROUP",
+                "dpapi_creds": [],
+                "kerberos_creds": [
+                    {
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "WORKGROUP",
+                        "luid": 996,
+                        "password": null,
+                        "password_raw": "",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "medusa-pc$"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "",
+                "logon_time": "2023-01-17T13:39:16.828125+00:00",
+                "luid": 996,
+                "msv_creds": [],
+                "session_id": 0,
+                "sid": "S-1-5-20",
+                "ssp_creds": [],
+                "tspkg_creds": [],
+                "username": "MEDUSA-PC$",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "WORKGROUP",
+                        "luid": 996,
+                        "password": null,
+                        "password_raw": "",
+                        "username": "MEDUSA-PC$"
+                    }
+                ]
+            },
+            "997": {
+                "authentication_id": 997,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "NT AUTHORITY",
+                "dpapi_creds": [],
+                "kerberos_creds": [
+                    {
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "",
+                        "luid": 997,
+                        "password": null,
+                        "password_raw": "",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": ""
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "",
+                "logon_time": "2023-01-17T13:39:16.843750+00:00",
+                "luid": 997,
+                "msv_creds": [],
+                "session_id": 0,
+                "sid": "S-1-5-19",
+                "ssp_creds": [],
+                "tspkg_creds": [],
+                "username": "SERVICIO LOCAL",
+                "wdigest_creds": []
+            },
+            "999": {
+                "authentication_id": 999,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "WORKGROUP",
+                "dpapi_creds": [
+                    {
+                        "credtype": "dpapi",
+                        "key_guid": "c005befa-c2f2-4f70-bce6-9199e1b3d537",
+                        "luid": 999,
+                        "masterkey": "1b9c89f8747b31e23126511d184effa733f09c0425e813e4665825ae711043d75cd33d21718256b4f002b11e9b7ce8beba3a4d0d1524f64ae07c5b11450393ed",
+                        "sha1_masterkey": "063fc03a751363d0b597b119a554c505d50d79fc"
+                    },
+                    {
+                        "credtype": "dpapi",
+                        "key_guid": "4ec4ace1-da38-4c23-b8bc-311167afd57a",
+                        "luid": 999,
+                        "masterkey": "3e15960063b911f90ac5b696d08f049475736477a581d9bd878a348866d29fb8c4b1e07a2de410240676b55460681c876e9ef23ce64ba3bb6a84a72fbcd0fb17",
+                        "sha1_masterkey": "599b49e8537fa1be1dbd88441989ae8d4bd4054d"
+                    },
+                    {
+                        "credtype": "dpapi",
+                        "key_guid": "4834d175-165a-48f4-9ecc-fb22225c3972",
+                        "luid": 999,
+                        "masterkey": "ea21228b08295250eb17cc72fb17926fca02688a4ce2542889bf2ee0908d615160e234f19c4964d0d31c58a5a74df4a1152f5328049b65090e887b78f9371bfd",
+                        "sha1_masterkey": "28594cfa5204bc52e36106051cd28ab896522920"
+                    },
+                    {
+                        "credtype": "dpapi",
+                        "key_guid": "f22e410f-f947-4e08-8f2a-8f65df603f8d",
+                        "luid": 999,
+                        "masterkey": "19c05880b67d50f8231cd8009836e3cdc55610e4877f8b976abd5ca15600d0e759934324c6204b56f02527039e7fc52a1dfb5296d3381aaa7c3eb610dffa32fa",
+                        "sha1_masterkey": "b859b2b52e7e49cf5c70069745c88853c4b23487"
+                    }
+                ],
+                "kerberos_creds": [
+                    {
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "WORKGROUP",
+                        "luid": 999,
+                        "password": null,
+                        "password_raw": "",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "medusa-pc$"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "",
+                "logon_time": "2023-01-17T13:39:16.718750+00:00",
+                "luid": 999,
+                "msv_creds": [],
+                "session_id": 0,
+                "sid": "S-1-5-18",
+                "ssp_creds": [],
+                "tspkg_creds": [],
+                "username": "MEDUSA-PC$",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "WORKGROUP",
+                        "luid": 999,
+                        "password": null,
+                        "password_raw": "",
+                        "username": "MEDUSA-PC$"
+                    }
+                ]
+            },
+            "23426": {
+                "authentication_id": 23426,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "",
+                "dpapi_creds": [],
+                "kerberos_creds": [],
+                "livessp_creds": [],
+                "logon_server": "",
+                "logon_time": "2023-01-17T13:39:16.734375+00:00",
+                "luid": 23426,
+                "msv_creds": [],
+                "session_id": 0,
+                "sid": "None",
+                "ssp_creds": [],
+                "tspkg_creds": [],
+                "username": "",
+                "wdigest_creds": []
+            },
+            "96251": {
+                "authentication_id": 96251,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "NT AUTHORITY",
+                "dpapi_creds": [],
+                "kerberos_creds": [],
+                "livessp_creds": [],
+                "logon_server": "",
+                "logon_time": "2023-01-17T13:39:17.902344+00:00",
+                "luid": 96251,
+                "msv_creds": [],
+                "session_id": 0,
+                "sid": "S-1-5-7",
+                "ssp_creds": [],
+                "tspkg_creds": [],
+                "username": "ANONYMOUS LOGON",
+                "wdigest_creds": []
+            },
+            "121543": {
+                "authentication_id": 121543,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "Medusa-PC",
+                "dpapi_creds": [],
+                "kerberos_creds": [
+                    {
+                        "aes128": "32ed87bdb5fdc5e9cba88547376818d4",
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "Medusa-PC",
+                        "luid": 121543,
+                        "password": "123456",
+                        "password_raw": "31003200330034003500360000000000",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "Medusa"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "MEDUSA-PC",
+                "logon_time": "2023-01-17T13:39:39.941406+00:00",
+                "luid": 121543,
+                "msv_creds": [
+                    {
+                        "DPAPI": null,
+                        "LMHash": "44efce164ab921caaad3b435b51404ee",
+                        "NThash": "32ed87bdb5fdc5e9cba88547376818d4",
+                        "SHAHash": "6ed5833cf35286ebf8662b7b5949f0d742bbec3f",
+                        "domainname": "Medusa-PC",
+                        "username": "Medusa"
+                    }
+                ],
+                "session_id": 1,
+                "sid": "S-1-5-21-1556941724-2101079873-2087351601-1001",
+                "ssp_creds": [],
+                "tspkg_creds": [
+                    {
+                        "credtype": "tspkg",
+                        "domainname": "Medusa-PC",
+                        "luid": 121543,
+                        "password": "123456",
+                        "password_raw": "31003200330034003500360000000000",
+                        "username": "Medusa"
+                    }
+                ],
+                "username": "Medusa",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "Medusa-PC",
+                        "luid": 121543,
+                        "password": "123456",
+                        "password_raw": "31003200330034003500360000000000",
+                        "username": "Medusa"
+                    }
+                ]
+            },
+            "121589": {
+                "authentication_id": 121589,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "Medusa-PC",
+                "dpapi_creds": [],
+                "kerberos_creds": [
+                    {
+                        "aes128": "32ed87bdb5fdc5e9cba88547376818d4",
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "Medusa-PC",
+                        "luid": 121589,
+                        "password": "123456",
+                        "password_raw": "31003200330034003500360000000000",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "Medusa"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "MEDUSA-PC",
+                "logon_time": "2023-01-17T13:39:39.941406+00:00",
+                "luid": 121589,
+                "msv_creds": [
+                    {
+                        "DPAPI": null,
+                        "LMHash": "44efce164ab921caaad3b435b51404ee",
+                        "NThash": "32ed87bdb5fdc5e9cba88547376818d4",
+                        "SHAHash": "6ed5833cf35286ebf8662b7b5949f0d742bbec3f",
+                        "domainname": "Medusa-PC",
+                        "username": "Medusa"
+                    }
+                ],
+                "session_id": 1,
+                "sid": "S-1-5-21-1556941724-2101079873-2087351601-1001",
+                "ssp_creds": [],
+                "tspkg_creds": [
+                    {
+                        "credtype": "tspkg",
+                        "domainname": "Medusa-PC",
+                        "luid": 121589,
+                        "password": "123456",
+                        "password_raw": "31003200330034003500360000000000",
+                        "username": "Medusa"
+                    }
+                ],
+                "username": "Medusa",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "Medusa-PC",
+                        "luid": 121589,
+                        "password": "123456",
+                        "password_raw": "31003200330034003500360000000000",
+                        "username": "Medusa"
+                    }
+                ]
+            },
+            "424519": {
+                "authentication_id": 424519,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "Medusa-PC",
+                "dpapi_creds": [],
+                "kerberos_creds": [
+                    {
+                        "aes128": "e16a94ce4337564fbd00672ac12367fc",
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "Medusa-PC",
+                        "luid": 424519,
+                        "password": "br4in_br34k3r_v2",
+                        "password_raw": "62007200340069006e005f0062007200330034006b00330072005f0076003200",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "cromiphi"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "MEDUSA-PC",
+                "logon_time": "2023-01-17T13:50:58.337500+00:00",
+                "luid": 424519,
+                "msv_creds": [
+                    {
+                        "DPAPI": null,
+                        "LMHash": null,
+                        "NThash": "e16a94ce4337564fbd00672ac12367fc",
+                        "SHAHash": "4905a08610106fda3be33780dd1384a3fa326c4b",
+                        "domainname": "Medusa-PC",
+                        "username": "cromiphi"
+                    }
+                ],
+                "session_id": 2,
+                "sid": "S-1-5-21-1556941724-2101079873-2087351601-1005",
+                "ssp_creds": [],
+                "tspkg_creds": [
+                    {
+                        "credtype": "tspkg",
+                        "domainname": "Medusa-PC",
+                        "luid": 424519,
+                        "password": "br4in_br34k3r_v2",
+                        "password_raw": "62007200340069006e005f0062007200330034006b00330072005f0076003200",
+                        "username": "cromiphi"
+                    }
+                ],
+                "username": "cromiphi",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "Medusa-PC",
+                        "luid": 424519,
+                        "password": "br4in_br34k3r_v2",
+                        "password_raw": "62007200340069006e005f0062007200330034006b00330072005f0076003200",
+                        "username": "cromiphi"
+                    }
+                ]
+            },
+            "526374": {
+                "authentication_id": 526374,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "Medusa-PC",
+                "dpapi_creds": [],
+                "kerberos_creds": [
+                    {
+                        "aes128": "6dd06920b7a4203d195f9f05084d6cb6",
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "Medusa-PC",
+                        "luid": 526374,
+                        "password": "br4in_br34k3r",
+                        "password_raw": "62007200340069006e005f0062007200330034006b0033007200000000000000",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "d4t4s3c"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "MEDUSA-PC",
+                "logon_time": "2023-01-17T13:52:02.861914+00:00",
+                "luid": 526374,
+                "msv_creds": [
+                    {
+                        "DPAPI": null,
+                        "LMHash": "375262b6e52fb3710decb7ba03fdea49",
+                        "NThash": "6dd06920b7a4203d195f9f05084d6cb6",
+                        "SHAHash": "65b498805e94b4546396f8bd7a9ee093e85f1594",
+                        "domainname": "Medusa-PC",
+                        "username": "d4t4s3c"
+                    }
+                ],
+                "session_id": 3,
+                "sid": "S-1-5-21-1556941724-2101079873-2087351601-1013",
+                "ssp_creds": [],
+                "tspkg_creds": [
+                    {
+                        "credtype": "tspkg",
+                        "domainname": "Medusa-PC",
+                        "luid": 526374,
+                        "password": "br4in_br34k3r",
+                        "password_raw": "62007200340069006e005f0062007200330034006b0033007200000000000000",
+                        "username": "d4t4s3c"
+                    }
+                ],
+                "username": "d4t4s3c",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "Medusa-PC",
+                        "luid": 526374,
+                        "password": "br4in_br34k3r",
+                        "password_raw": "62007200340069006e005f0062007200330034006b0033007200000000000000",
+                        "username": "d4t4s3c"
+                    }
+                ]
+            },
+            "601672": {
+                "authentication_id": 601672,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "Medusa-PC",
+                "dpapi_creds": [],
+                "kerberos_creds": [
+                    {
+                        "aes128": "46a5b2901a6db08a0cb93a04dc6c1949",
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "Medusa-PC",
+                        "luid": 601672,
+                        "password": "UnD3sc0n0c1d0",
+                        "password_raw": "55006e00440033007300630030006e0030006300310064003000000000000000",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "InfayerTS"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "MEDUSA-PC",
+                "logon_time": "2023-01-17T13:52:52.583594+00:00",
+                "luid": 601672,
+                "msv_creds": [
+                    {
+                        "DPAPI": null,
+                        "LMHash": "09b8d9346bc2c8435c7e856a3bfa37de",
+                        "NThash": "46a5b2901a6db08a0cb93a04dc6c1949",
+                        "SHAHash": "e0fab5eb95b7c356da9a8f4f0239b1a510fd12c6",
+                        "domainname": "Medusa-PC",
+                        "username": "InfayerTS"
+                    }
+                ],
+                "session_id": 4,
+                "sid": "S-1-5-21-1556941724-2101079873-2087351601-1011",
+                "ssp_creds": [],
+                "tspkg_creds": [
+                    {
+                        "credtype": "tspkg",
+                        "domainname": "Medusa-PC",
+                        "luid": 601672,
+                        "password": "UnD3sc0n0c1d0",
+                        "password_raw": "55006e00440033007300630030006e0030006300310064003000000000000000",
+                        "username": "InfayerTS"
+                    }
+                ],
+                "username": "InfayerTS",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "Medusa-PC",
+                        "luid": 601672,
+                        "password": "UnD3sc0n0c1d0",
+                        "password_raw": "55006e00440033007300630030006e0030006300310064003000000000000000",
+                        "username": "InfayerTS"
+                    }
+                ]
+            },
+            "682065": {
+                "authentication_id": 682065,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "Medusa-PC",
+                "dpapi_creds": [],
+                "kerberos_creds": [
+                    {
+                        "aes128": "362e83945feaa2c874f39b670ef27deb",
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "Medusa-PC",
+                        "luid": 682065,
+                        "password": "b1zum_3_AM",
+                        "password_raw": "620031007a0075006d005f0033005f0041004d0000000000",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "jabatron"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "MEDUSA-PC",
+                "logon_time": "2023-01-17T13:54:24.123633+00:00",
+                "luid": 682065,
+                "msv_creds": [
+                    {
+                        "DPAPI": null,
+                        "LMHash": "162b58d2300279d1b7f036d77017ce3e",
+                        "NThash": "362e83945feaa2c874f39b670ef27deb",
+                        "SHAHash": "60cd5410d0cf4659d2b6012e134ebb989a37a241",
+                        "domainname": "Medusa-PC",
+                        "username": "jabatron"
+                    }
+                ],
+                "session_id": 5,
+                "sid": "S-1-5-21-1556941724-2101079873-2087351601-1008",
+                "ssp_creds": [],
+                "tspkg_creds": [
+                    {
+                        "credtype": "tspkg",
+                        "domainname": "Medusa-PC",
+                        "luid": 682065,
+                        "password": "b1zum_3_AM",
+                        "password_raw": "620031007a0075006d005f0033005f0041004d0000000000",
+                        "username": "jabatron"
+                    }
+                ],
+                "username": "jabatron",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "Medusa-PC",
+                        "luid": 682065,
+                        "password": "b1zum_3_AM",
+                        "password_raw": "620031007a0075006d005f0033005f0041004d0000000000",
+                        "username": "jabatron"
+                    }
+                ]
+            },
+            "763754": {
+                "authentication_id": 763754,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "Medusa-PC",
+                "dpapi_creds": [],
+                "kerberos_creds": [
+                    {
+                        "aes128": "139988f1c9a8a7cb6fb03762a6d510e7",
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "Medusa-PC",
+                        "luid": 763754,
+                        "password": "littl3_h4ck3r_v2",
+                        "password_raw": "6c006900740074006c0033005f006800340063006b00330072005f0076003200",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "RiJaba1"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "MEDUSA-PC",
+                "logon_time": "2023-01-17T13:55:03.742773+00:00",
+                "luid": 763754,
+                "msv_creds": [
+                    {
+                        "DPAPI": null,
+                        "LMHash": null,
+                        "NThash": "139988f1c9a8a7cb6fb03762a6d510e7",
+                        "SHAHash": "ff33ab3051fc5bc0fafd7d1c266c062136a1f266",
+                        "domainname": "Medusa-PC",
+                        "username": "RiJaba1"
+                    }
+                ],
+                "session_id": 6,
+                "sid": "S-1-5-21-1556941724-2101079873-2087351601-1003",
+                "ssp_creds": [],
+                "tspkg_creds": [
+                    {
+                        "credtype": "tspkg",
+                        "domainname": "Medusa-PC",
+                        "luid": 763754,
+                        "password": "littl3_h4ck3r_v2",
+                        "password_raw": "6c006900740074006c0033005f006800340063006b00330072005f0076003200",
+                        "username": "RiJaba1"
+                    }
+                ],
+                "username": "RiJaba1",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "Medusa-PC",
+                        "luid": 763754,
+                        "password": "littl3_h4ck3r_v2",
+                        "password_raw": "6c006900740074006c0033005f006800340063006b00330072005f0076003200",
+                        "username": "RiJaba1"
+                    }
+                ]
+            },
+            "845877": {
+                "authentication_id": 845877,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "Medusa-PC",
+                "dpapi_creds": [],
+                "kerberos_creds": [
+                    {
+                        "aes128": "6ec779920e220c163f33101085eff0b9",
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "Medusa-PC",
+                        "luid": 845877,
+                        "password": "5p3ctr3_p0is0n_xX",
+                        "password_raw": "35007000330063007400720033005f00700030006900730030006e005f0078005800000000000000",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "spectre"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "MEDUSA-PC",
+                "logon_time": "2023-01-17T13:56:09.715430+00:00",
+                "luid": 845877,
+                "msv_creds": [
+                    {
+                        "DPAPI": null,
+                        "LMHash": null,
+                        "NThash": "6ec779920e220c163f33101085eff0b9",
+                        "SHAHash": "4d3341113c66127df14de8cc6ac7b4ebf52d74b5",
+                        "domainname": "Medusa-PC",
+                        "username": "spectre"
+                    }
+                ],
+                "session_id": 7,
+                "sid": "S-1-5-21-1556941724-2101079873-2087351601-1004",
+                "ssp_creds": [],
+                "tspkg_creds": [
+                    {
+                        "credtype": "tspkg",
+                        "domainname": "Medusa-PC",
+                        "luid": 845877,
+                        "password": "5p3ctr3_p0is0n_xX",
+                        "password_raw": "35007000330063007400720033005f00700030006900730030006e005f0078005800000000000000",
+                        "username": "spectre"
+                    }
+                ],
+                "username": "spectre",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "Medusa-PC",
+                        "luid": 845877,
+                        "password": "5p3ctr3_p0is0n_xX",
+                        "password_raw": "35007000330063007400720033005f00700030006900730030006e005f0078005800000000000000",
+                        "username": "spectre"
+                    }
+                ]
+            },
+            "933125": {
+                "authentication_id": 933125,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "Medusa-PC",
+                "dpapi_creds": [],
+                "kerberos_creds": [
+                    {
+                        "aes128": "37da1ddba9ebe6b1b36651fd5280c6af",
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "Medusa-PC",
+                        "luid": 933125,
+                        "password": "th3_b0ss",
+                        "password_raw": "7400680033005f006200300073007300",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "sml"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "MEDUSA-PC",
+                "logon_time": "2023-01-17T13:57:13.015234+00:00",
+                "luid": 933125,
+                "msv_creds": [
+                    {
+                        "DPAPI": null,
+                        "LMHash": "92cae3307cc9b39593e28745b8bf4ba6",
+                        "NThash": "37da1ddba9ebe6b1b36651fd5280c6af",
+                        "SHAHash": "4b1f807db4643e6529e1e591b572435384743e2d",
+                        "domainname": "Medusa-PC",
+                        "username": "sml"
+                    }
+                ],
+                "session_id": 8,
+                "sid": "S-1-5-21-1556941724-2101079873-2087351601-1014",
+                "ssp_creds": [],
+                "tspkg_creds": [
+                    {
+                        "credtype": "tspkg",
+                        "domainname": "Medusa-PC",
+                        "luid": 933125,
+                        "password": "th3_b0ss",
+                        "password_raw": "7400680033005f006200300073007300",
+                        "username": "sml"
+                    }
+                ],
+                "username": "sml",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "Medusa-PC",
+                        "luid": 933125,
+                        "password": "th3_b0ss",
+                        "password_raw": "7400680033005f006200300073007300",
+                        "username": "sml"
+                    }
+                ]
+            },
+            "1000050": {
+                "authentication_id": 1000050,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "Medusa-PC",
+                "dpapi_creds": [
+                    {
+                        "credtype": "dpapi",
+                        "key_guid": "5062c530-69ce-4bc9-8272-9db84b775b3c",
+                        "luid": 1000050,
+                        "masterkey": "6f53397764e60e283d112ce7da1b9425fced09e213b8c02044f28f9146928c8c91f5ddc7b586faa3d6b5896cd3ffd8f07991187ab9061ab32f111cdf3641f4e2",
+                        "sha1_masterkey": "1c8549da2ab13f26fe19d46bfafbccb6b518c96a"
+                    }
+                ],
+                "kerberos_creds": [
+                    {
+                        "aes128": "4aef2b11d1bb6c7594c904035f611937",
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "Medusa-PC",
+                        "luid": 1000050,
+                        "password": "Wh1t3_h4ck",
+                        "password_raw": "570068003100740033005f006800340063006b0000000000",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "LordP4"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "MEDUSA-PC",
+                "logon_time": "2023-01-17T13:57:52.044531+00:00",
+                "luid": 1000050,
+                "msv_creds": [
+                    {
+                        "DPAPI": null,
+                        "LMHash": "787465d75fac19613c442716b42e315b",
+                        "NThash": "4aef2b11d1bb6c7594c904035f611937",
+                        "SHAHash": "3f872737266578b9c6678f42ae1fadc19f34b523",
+                        "domainname": "Medusa-PC",
+                        "username": "LordP4"
+                    }
+                ],
+                "session_id": 9,
+                "sid": "S-1-5-21-1556941724-2101079873-2087351601-1020",
+                "ssp_creds": [],
+                "tspkg_creds": [
+                    {
+                        "credtype": "tspkg",
+                        "domainname": "Medusa-PC",
+                        "luid": 1000050,
+                        "password": "Wh1t3_h4ck",
+                        "password_raw": "570068003100740033005f006800340063006b0000000000",
+                        "username": "LordP4"
+                    }
+                ],
+                "username": "LordP4",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "Medusa-PC",
+                        "luid": 1000050,
+                        "password": "Wh1t3_h4ck",
+                        "password_raw": "570068003100740033005f006800340063006b0000000000",
+                        "username": "LordP4"
+                    }
+                ]
+            },
+            "1298068": {
+                "authentication_id": 1298068,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "Medusa-PC",
+                "dpapi_creds": [],
+                "kerberos_creds": [
+                    {
+                        "aes128": "c9bb6fbc746633a84652119bf544ebe3",
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "Medusa-PC",
+                        "luid": 1298068,
+                        "password": "b4ck3nd_pr0gr4m3r",
+                        "password_raw": "6200340063006b0033006e0064005f007000720030006700720034006d0033007200000000000000",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "ct0l4"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "MEDUSA-PC",
+                "logon_time": "2023-01-17T13:58:42.033789+00:00",
+                "luid": 1298068,
+                "msv_creds": [
+                    {
+                        "DPAPI": null,
+                        "LMHash": null,
+                        "NThash": "c9bb6fbc746633a84652119bf544ebe3",
+                        "SHAHash": "82848b1644602bd6a500625b37fd8ed14807fda8",
+                        "domainname": "Medusa-PC",
+                        "username": "ct0l4"
+                    }
+                ],
+                "session_id": 10,
+                "sid": "S-1-5-21-1556941724-2101079873-2087351601-1010",
+                "ssp_creds": [],
+                "tspkg_creds": [
+                    {
+                        "credtype": "tspkg",
+                        "domainname": "Medusa-PC",
+                        "luid": 1298068,
+                        "password": "b4ck3nd_pr0gr4m3r",
+                        "password_raw": "6200340063006b0033006e0064005f007000720030006700720034006d0033007200000000000000",
+                        "username": "ct0l4"
+                    }
+                ],
+                "username": "ct0l4",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "Medusa-PC",
+                        "luid": 1298068,
+                        "password": "b4ck3nd_pr0gr4m3r",
+                        "password_raw": "6200340063006b0033006e0064005f007000720030006700720034006d0033007200000000000000",
+                        "username": "ct0l4"
+                    }
+                ]
+            },
+            "1381468": {
+                "authentication_id": 1381468,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "Medusa-PC",
+                "dpapi_creds": [
+                    {
+                        "credtype": "dpapi",
+                        "key_guid": "05667fe6-e6a1-4e5d-ab98-d9ea9682dcf7",
+                        "luid": 1381468,
+                        "masterkey": "2bae1dc400a32522b6efe39fe24d7c253dc8c74bd1dfb890699f940be9a79fd6d6ef465cef7d0af4c70c9fa335065b178dd8cdbfa60f3dcd62e3e88d22521f2a",
+                        "sha1_masterkey": "ed4fb77971f735932fee0e9efd584e6d1bfb01e8"
+                    }
+                ],
+                "kerberos_creds": [
+                    {
+                        "aes128": "e28f0fd696fb69d3317f1927c9e8d15c",
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "Medusa-PC",
+                        "luid": 1381468,
+                        "password": "n1mb3r_s1x",
+                        "password_raw": "6e0031006d006200330072005f0073003100780000000000",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "numero6"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "MEDUSA-PC",
+                "logon_time": "2023-01-17T13:59:06.967383+00:00",
+                "luid": 1381468,
+                "msv_creds": [
+                    {
+                        "DPAPI": null,
+                        "LMHash": "3a9514532e68d1ade189cb5bf02b24bb",
+                        "NThash": "e28f0fd696fb69d3317f1927c9e8d15c",
+                        "SHAHash": "8295426605ff734e2bf256b630d905983dd929b5",
+                        "domainname": "Medusa-PC",
+                        "username": "numero6"
+                    }
+                ],
+                "session_id": 11,
+                "sid": "S-1-5-21-1556941724-2101079873-2087351601-1021",
+                "ssp_creds": [],
+                "tspkg_creds": [
+                    {
+                        "credtype": "tspkg",
+                        "domainname": "Medusa-PC",
+                        "luid": 1381468,
+                        "password": "n1mb3r_s1x",
+                        "password_raw": "6e0031006d006200330072005f0073003100780000000000",
+                        "username": "numero6"
+                    }
+                ],
+                "username": "numero6",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "Medusa-PC",
+                        "luid": 1381468,
+                        "password": "n1mb3r_s1x",
+                        "password_raw": "6e0031006d006200330072005f0073003100780000000000",
+                        "username": "numero6"
+                    }
+                ]
+            },
+            "1692880": {
+                "authentication_id": 1692880,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "Medusa-PC",
+                "dpapi_creds": [],
+                "kerberos_creds": [
+                    {
+                        "aes128": "d54fc8d1a368eab7bee473b8c7b93748",
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "Medusa-PC",
+                        "luid": 1692880,
+                        "password": "littl3_h4ck3r",
+                        "password_raw": "6c006900740074006c0033005f006800340063006b0033007200000000000000",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "nolo"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "MEDUSA-PC",
+                "logon_time": "2023-01-17T14:00:28.298438+00:00",
+                "luid": 1692880,
+                "msv_creds": [
+                    {
+                        "DPAPI": null,
+                        "LMHash": "580bb7781b7384e43463667f1a71e97a",
+                        "NThash": "d54fc8d1a368eab7bee473b8c7b93748",
+                        "SHAHash": "50908cf3b351621d70f7e55e9ca92c37b0a5990d",
+                        "domainname": "Medusa-PC",
+                        "username": "nolo"
+                    }
+                ],
+                "session_id": 12,
+                "sid": "S-1-5-21-1556941724-2101079873-2087351601-1019",
+                "ssp_creds": [],
+                "tspkg_creds": [
+                    {
+                        "credtype": "tspkg",
+                        "domainname": "Medusa-PC",
+                        "luid": 1692880,
+                        "password": "littl3_h4ck3r",
+                        "password_raw": "6c006900740074006c0033005f006800340063006b0033007200000000000000",
+                        "username": "nolo"
+                    }
+                ],
+                "username": "nolo",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "Medusa-PC",
+                        "luid": 1692880,
+                        "password": "littl3_h4ck3r",
+                        "password_raw": "6c006900740074006c0033005f006800340063006b0033007200000000000000",
+                        "username": "nolo"
+                    }
+                ]
+            },
+            "1785900": {
+                "authentication_id": 1785900,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "Medusa-PC",
+                "dpapi_creds": [],
+                "kerberos_creds": [
+                    {
+                        "aes128": "ba26a9d6f4cf057e1652257963729d49",
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "Medusa-PC",
+                        "luid": 1785900,
+                        "password": "pr0xy_ch41ns_456",
+                        "password_raw": "700072003000780079005f0063006800340031006e0073005f00340035003600",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "Pr0xy"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "MEDUSA-PC",
+                "logon_time": "2023-01-17T14:01:16.137305+00:00",
+                "luid": 1785900,
+                "msv_creds": [
+                    {
+                        "DPAPI": null,
+                        "LMHash": null,
+                        "NThash": "ba26a9d6f4cf057e1652257963729d49",
+                        "SHAHash": "802991035ea1acf65584c004f34a72902a0e609c",
+                        "domainname": "Medusa-PC",
+                        "username": "Pr0xy"
+                    }
+                ],
+                "session_id": 13,
+                "sid": "S-1-5-21-1556941724-2101079873-2087351601-1017",
+                "ssp_creds": [],
+                "tspkg_creds": [
+                    {
+                        "credtype": "tspkg",
+                        "domainname": "Medusa-PC",
+                        "luid": 1785900,
+                        "password": "pr0xy_ch41ns_456",
+                        "password_raw": "700072003000780079005f0063006800340031006e0073005f00340035003600",
+                        "username": "Pr0xy"
+                    }
+                ],
+                "username": "Pr0xy",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "Medusa-PC",
+                        "luid": 1785900,
+                        "password": "pr0xy_ch41ns_456",
+                        "password_raw": "700072003000780079005f0063006800340031006e0073005f00340035003600",
+                        "username": "Pr0xy"
+                    }
+                ]
+            },
+            "1881308": {
+                "authentication_id": 1881308,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "Medusa-PC",
+                "dpapi_creds": [],
+                "kerberos_creds": [
+                    {
+                        "aes128": "7f62b734f90db005c14454d0e7982bf2",
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "Medusa-PC",
+                        "luid": 1881308,
+                        "password": "n0s_v0lv1m0s_4_1lusi0n4r",
+                        "password_raw": "6e00300073005f00760030006c00760031006d00300073005f0034005f0031006c0075007300690030006e0034007200",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "Claor"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "MEDUSA-PC",
+                "logon_time": "2023-01-17T14:02:32.235938+00:00",
+                "luid": 1881308,
+                "msv_creds": [
+                    {
+                        "DPAPI": null,
+                        "LMHash": null,
+                        "NThash": "7f62b734f90db005c14454d0e7982bf2",
+                        "SHAHash": "70cb75925c8a0b5825faaa344e9252ba9c23fa41",
+                        "domainname": "Medusa-PC",
+                        "username": "Claor"
+                    }
+                ],
+                "session_id": 14,
+                "sid": "S-1-5-21-1556941724-2101079873-2087351601-1006",
+                "ssp_creds": [],
+                "tspkg_creds": [
+                    {
+                        "credtype": "tspkg",
+                        "domainname": "Medusa-PC",
+                        "luid": 1881308,
+                        "password": "n0s_v0lv1m0s_4_1lusi0n4r",
+                        "password_raw": "6e00300073005f00760030006c00760031006d00300073005f0034005f0031006c0075007300690030006e0034007200",
+                        "username": "Claor"
+                    }
+                ],
+                "username": "Claor",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "Medusa-PC",
+                        "luid": 1881308,
+                        "password": "n0s_v0lv1m0s_4_1lusi0n4r",
+                        "password_raw": "6e00300073005f00760030006c00760031006d00300073005f0034005f0031006c0075007300690030006e0034007200",
+                        "username": "Claor"
+                    }
+                ]
+            },
+            "1977311": {
+                "authentication_id": 1977311,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "Medusa-PC",
+                "dpapi_creds": [],
+                "kerberos_creds": [
+                    {
+                        "aes128": "f430978744f1846424852b47c4ee8a10",
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "Medusa-PC",
+                        "luid": 1977311,
+                        "password": "4l13num_qwerty",
+                        "password_raw": "34006c00310033006e0075006d005f0071007700650072007400790000000000",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "alienum"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "MEDUSA-PC",
+                "logon_time": "2023-01-17T14:03:15.227148+00:00",
+                "luid": 1977311,
+                "msv_creds": [
+                    {
+                        "DPAPI": null,
+                        "LMHash": "ca68f3f2af89ee409b93859eb9628cfa",
+                        "NThash": "f430978744f1846424852b47c4ee8a10",
+                        "SHAHash": "4c8c55d87f86d95146afd0fe1437d1d71384a15f",
+                        "domainname": "Medusa-PC",
+                        "username": "alienum"
+                    }
+                ],
+                "session_id": 15,
+                "sid": "S-1-5-21-1556941724-2101079873-2087351601-1018",
+                "ssp_creds": [],
+                "tspkg_creds": [
+                    {
+                        "credtype": "tspkg",
+                        "domainname": "Medusa-PC",
+                        "luid": 1977311,
+                        "password": "4l13num_qwerty",
+                        "password_raw": "34006c00310033006e0075006d005f0071007700650072007400790000000000",
+                        "username": "alienum"
+                    }
+                ],
+                "username": "alienum",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "Medusa-PC",
+                        "luid": 1977311,
+                        "password": "4l13num_qwerty",
+                        "password_raw": "34006c00310033006e0075006d005f0071007700650072007400790000000000",
+                        "username": "alienum"
+                    }
+                ]
+            },
+            "2072766": {
+                "authentication_id": 2072766,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "Medusa-PC",
+                "dpapi_creds": [],
+                "kerberos_creds": [
+                    {
+                        "aes128": "9b05a607cfb0b59176092be732b6b814",
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "Medusa-PC",
+                        "luid": 2072766,
+                        "password": "p0w3rf1ll_abc",
+                        "password_raw": "70003000770033007200660031006c006c005f00610062006300000000000000",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "powerful"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "MEDUSA-PC",
+                "logon_time": "2023-01-17T14:04:05.978125+00:00",
+                "luid": 2072766,
+                "msv_creds": [
+                    {
+                        "DPAPI": null,
+                        "LMHash": "8657a86693ce10c313cb02d141696a00",
+                        "NThash": "9b05a607cfb0b59176092be732b6b814",
+                        "SHAHash": "f2197be95bf11a3dc2f494b1a20814a3a27bd420",
+                        "domainname": "Medusa-PC",
+                        "username": "powerful"
+                    }
+                ],
+                "session_id": 16,
+                "sid": "S-1-5-21-1556941724-2101079873-2087351601-1012",
+                "ssp_creds": [],
+                "tspkg_creds": [
+                    {
+                        "credtype": "tspkg",
+                        "domainname": "Medusa-PC",
+                        "luid": 2072766,
+                        "password": "p0w3rf1ll_abc",
+                        "password_raw": "70003000770033007200660031006c006c005f00610062006300000000000000",
+                        "username": "powerful"
+                    }
+                ],
+                "username": "powerful",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "Medusa-PC",
+                        "luid": 2072766,
+                        "password": "p0w3rf1ll_abc",
+                        "password_raw": "70003000770033007200660031006c006c005f00610062006300000000000000",
+                        "username": "powerful"
+                    }
+                ]
+            },
+            "2167111": {
+                "authentication_id": 2167111,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "Medusa-PC",
+                "dpapi_creds": [],
+                "kerberos_creds": [
+                    {
+                        "aes128": "4a88b7b647b8832ddd0660ec101c7471",
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "Medusa-PC",
+                        "luid": 2167111,
+                        "password": "t0p_s3cr3t",
+                        "password_raw": "7400300070005f0073003300630072003300740000000000",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "shelldredd"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "MEDUSA-PC",
+                "logon_time": "2023-01-17T14:04:31.112890+00:00",
+                "luid": 2167111,
+                "msv_creds": [
+                    {
+                        "DPAPI": null,
+                        "LMHash": "eed81a9f101536a4abb659e51581b7d4",
+                        "NThash": "4a88b7b647b8832ddd0660ec101c7471",
+                        "SHAHash": "e2b9a8a7a676bad2060ee2b57cd497ae11d599f9",
+                        "domainname": "Medusa-PC",
+                        "username": "shelldredd"
+                    }
+                ],
+                "session_id": 17,
+                "sid": "S-1-5-21-1556941724-2101079873-2087351601-1009",
+                "ssp_creds": [],
+                "tspkg_creds": [
+                    {
+                        "credtype": "tspkg",
+                        "domainname": "Medusa-PC",
+                        "luid": 2167111,
+                        "password": "t0p_s3cr3t",
+                        "password_raw": "7400300070005f0073003300630072003300740000000000",
+                        "username": "shelldredd"
+                    }
+                ],
+                "username": "shelldredd",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "Medusa-PC",
+                        "luid": 2167111,
+                        "password": "t0p_s3cr3t",
+                        "password_raw": "7400300070005f0073003300630072003300740000000000",
+                        "username": "shelldredd"
+                    }
+                ]
+            },
+            "2261421": {
+                "authentication_id": 2261421,
+                "cloudap_creds": [],
+                "credman_creds": [],
+                "domainname": "Medusa-PC",
+                "dpapi_creds": [],
+                "kerberos_creds": [
+                    {
+                        "aes128": "af71862c10235568287670ca23484fe5",
+                        "cardinfo": null,
+                        "credtype": "kerberos",
+                        "domainname": "Medusa-PC",
+                        "luid": 2261421,
+                        "password": "4v1jn3y4m_zxc",
+                        "password_raw": "3400760031006a006e003300790034006d005f007a0078006300000000000000",
+                        "pin": null,
+                        "pin_raw": null,
+                        "tickets": [],
+                        "username": "avijneyam"
+                    }
+                ],
+                "livessp_creds": [],
+                "logon_server": "MEDUSA-PC",
+                "logon_time": "2023-01-17T14:05:20.008398+00:00",
+                "luid": 2261421,
+                "msv_creds": [
+                    {
+                        "DPAPI": null,
+                        "LMHash": "009c022933c34479477921681300160c",
+                        "NThash": "af71862c10235568287670ca23484fe5",
+                        "SHAHash": "3c9943f1b81e5cdab6cd00d694f8ddd19a079893",
+                        "domainname": "Medusa-PC",
+                        "username": "avijneyam"
+                    }
+                ],
+                "session_id": 18,
+                "sid": "S-1-5-21-1556941724-2101079873-2087351601-1016",
+                "ssp_creds": [],
+                "tspkg_creds": [
+                    {
+                        "credtype": "tspkg",
+                        "domainname": "Medusa-PC",
+                        "luid": 2261421,
+                        "password": "4v1jn3y4m_zxc",
+                        "password_raw": "3400760031006a006e003300790034006d005f007a0078006300000000000000",
+                        "username": "avijneyam"
+                    }
+                ],
+                "username": "avijneyam",
+                "wdigest_creds": [
+                    {
+                        "credtype": "wdigest",
+                        "domainname": "Medusa-PC",
+                        "luid": 2261421,
+                        "password": "4v1jn3y4m_zxc",
+                        "password_raw": "3400760031006a006e003300790034006d005f007a0078006300000000000000",
+                        "username": "avijneyam"
+                    }
+                ]
+            }
+        },
+        "orphaned_creds": []
+    }
+}
