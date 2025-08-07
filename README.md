@@ -17,17 +17,17 @@ Este repositorio contiene una colección de laboratorios prácticos diseñados p
 
 | Nº  | Nombre de la Máquina       | Vulnerabilidades Principales                                                                     | Dificultad Estimada |
 |-----|----------------------------|--------------------------------------------------------------------------------------------------|---------------------|
-| 00  | simple                     | SMB mal configurado, servicios web expuestos, escalada de privilegios en Windows                 | Baja                |
-| 01  | whitedoor                  | FTP anónimo, explotación web (credenciales), escalada de privilegios en Linux                    | Baja - Media        |
-| 02  | talk                       | SQL Injection, escalada de privilegios en Linux                                                  | Media               |
-| 03  | preload                    | Server-Side Template Injection (SSTI) en Flask, RCE, escalada a root                             | Media - Alta        |
-| 04  | system                     | XXE (XML External Entity), acceso vía SSH, Python Library Hijacking                              | Media - Alta        |
-| 05  | faust                      | CMS Made Simple 2.2.5 vulnerable, tarea automatizada mal configurada, RCE                        | Media - Alta        |
-| 06  | twisted                    | Esteganografía, abuse de capabilities, ingeniería inversa, escalada local de privilegios         | Media - Alta        |
-| 07  | visions                    | Metadatos con información sensible, contraseñas débiles, configuración insegura de sudo          | Media               |
-| 08  | driftingblues9             | Vulnerabilidades conocidas en web, análisis de binarios, buffer overflow (BOF)                   | Media - Alta        |
-| 09  | tornado                    | SQL Truncation Attack, ejecución remota de comandos, abuso de permisos sudo                      | Media - Alta        |
-| 10  | medusa                     | LFI, log poisoning, fuerza bruta SSH, volcado de memoria, análisis de archivos cifrados          | Media               |
+| 00  | simple                     | SMB mal configurado, servicios web expuestos, escalada de privilegios en Windows                 | Easy                |
+| 01  | whitedoor                  | FTP anónimo, explotación web (credenciales), escalada de privilegios en Linux                    | Easy      |
+| 02  | talk                       | SQL Injection, escalada de privilegios en Linux                                                  | Easy               |
+| 03  | preload                    | Server-Side Template Injection (SSTI) en Flask, RCE, escalada a root                             | Easy     |
+| 04  | system                     | XXE (XML External Entity), acceso vía SSH, Python Library Hijacking                              | Easy     |
+| 05  | faust                      | CMS Made Simple 2.2.5 vulnerable, tarea automatizada mal configurada, RCE                        | Easy     |
+| 06  | twisted                    | Esteganografía, abuse de capabilities, ingeniería inversa, escalada local de privilegios         | Easy     |
+| 07  | visions                    | Metadatos con información sensible, contraseñas débiles, configuración insegura de sudo          | Easy               |
+| 08  | driftingblues9             | Vulnerabilidades conocidas en web, análisis de binarios, buffer overflow (BOF)                   | Easy     |
+| 09  | tornado                    | SQL Truncation Attack, ejecución remota de comandos, abuso de permisos sudo                      | Medium     |
+| 10  | medusa                     | LFI, log poisoning, fuerza bruta SSH, volcado de memoria, análisis de archivos cifrados          | Easy               |
 
 ---
 
@@ -42,7 +42,6 @@ Este repositorio contiene una colección de laboratorios prácticos diseñados p
 
 - VirtualBox o VMware
 - Kali Linux o cualquier distribución con herramientas de pentesting
-- Red NAT o Host-Only para pruebas locales
 - Python3, netcat, nmap, burpsuite, etc.
 
 ---
