@@ -1,12 +1,15 @@
 # Laboratorios de Pentesting Guiado
 
+> ⚠️ **Todas las máquinas de este repositorio fueron obtenidas desde [HackMyVM](https://hackmyvm.eu/), una plataforma de laboratorios de hacking ético.**  
+> El propósito de este repositorio es exclusivamente educativo.
+
 Este repositorio contiene una colección de laboratorios prácticos diseñados para simular escenarios reales de pruebas de penetración. Cada laboratorio sigue las fases establecidas por la metodología **PTES** (Penetration Testing Execution Standard) o la **OWASP Testing Guide v4**, permitiendo desarrollar habilidades técnicas en:
 
-- Recolección de información
-- Análisis de servicios expuestos
-- Explotación de vulnerabilidades web y de red
-- Escalada de privilegios
-- Post-explotación
+- Recolección de información  
+- Análisis de servicios expuestos  
+- Explotación de vulnerabilidades web y de red  
+- Escalada de privilegios  
+- Post-explotación  
 
 ---
 
