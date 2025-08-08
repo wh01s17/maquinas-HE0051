@@ -1,0 +1,4 @@
+# Nmap 7.97 scan initiated Fri Aug  8 15:03:46 2025 as: nmap -p- -sS --min-rate 5000 -n -Pn -oG 03-allPorts-knock 192.168.1.53
+Host: 192.168.1.53 ()	Status: Up
+Host: 192.168.1.53 ()	Ports: 22/open/tcp//ssh///, 80/open/tcp//http///	Ignored State: closed (65533)
+# Nmap done at Fri Aug  8 15:03:47 2025 -- 1 IP address (1 host up) scanned in 0.95 seconds

@@ -1,6 +1,6 @@
 # Laboratorios de Pentesting Guiado
 
-> ⚠️ **Todas las máquinas de este repositorio fueron obtenidas desde [HackMyVM](https://hackmyvm.eu/), una plataforma de laboratorios de hacking ético.**  
+> ⚠️ **Todas las máquinas de este repositorio fueron obtenidas desde [HackMyVM](https://hackmyvm.eu/) y [Vulnyx](https://vulnyx.com/), ambas  son plataformas de laboratorios de hacking ético gratuitas.**  
 > El propósito de este repositorio es exclusivamente educativo.
 
 Este repositorio contiene una colección de laboratorios prácticos diseñados para simular escenarios reales de pruebas de penetración. Cada laboratorio sigue las fases establecidas por la metodología **PTES** (Penetration Testing Execution Standard) o la **OWASP Testing Guide v4**, permitiendo desarrollar habilidades técnicas en:
@@ -28,6 +28,7 @@ Este repositorio contiene una colección de laboratorios prácticos diseñados p
 | 08  | driftingblues9             | Vulnerabilidades conocidas en web, análisis de binarios, buffer overflow (BOF)                   | Easy       |[HMV](https://hackmyvm.eu/machines/machine.php?vm=Driftingblues9) |
 | 09  | tornado                    | SQL Truncation Attack, ejecución remota de comandos, abuso de permisos sudo                      | Medium     |[HMV](https://hackmyvm.eu/machines/machine.php?vm=Tornado) |
 | 10  | medusa                     | LFI, log poisoning, fuerza bruta SSH, volcado de memoria, análisis de archivos cifrados          | Easy       |[HMV](https://hackmyvm.eu/machines/machine.php?vm=Medusa) |
+| 11  | hit                        | Explotación de repositorios expuestos, descubrimiento de puertos mediante port knocking, crackeo de claves SSH   | Easy       |[Vulnyx](https://vulnyx.com/#hit) |
 
 ---
 

