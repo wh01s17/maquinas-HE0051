@@ -15,19 +15,19 @@ Este repositorio contiene una colección de laboratorios prácticos diseñados p
 
 ## 🖥️ Tabla de Máquinas
 
-| Nº  | Nombre de la Máquina       | Vulnerabilidades Principales                                                                     | Dificultad Estimada |
-|-----|----------------------------|--------------------------------------------------------------------------------------------------|---------------------|
-| 00  | simple                     | SMB mal configurado, servicios web expuestos, escalada de privilegios en Windows                 | Easy                |
-| 01  | whitedoor                  | FTP anónimo, explotación web (credenciales), escalada de privilegios en Linux                    | Easy      |
-| 02  | talk                       | SQL Injection, escalada de privilegios en Linux                                                  | Easy               |
-| 03  | preload                    | Server-Side Template Injection (SSTI) en Flask, RCE, escalada a root                             | Easy     |
-| 04  | system                     | XXE (XML External Entity), acceso vía SSH, Python Library Hijacking                              | Easy     |
-| 05  | faust                      | CMS Made Simple 2.2.5 vulnerable, tarea automatizada mal configurada, RCE                        | Easy     |
-| 06  | twisted                    | Esteganografía, abuse de capabilities, ingeniería inversa, escalada local de privilegios         | Easy     |
-| 07  | visions                    | Metadatos con información sensible, contraseñas débiles, configuración insegura de sudo          | Easy               |
-| 08  | driftingblues9             | Vulnerabilidades conocidas en web, análisis de binarios, buffer overflow (BOF)                   | Easy     |
-| 09  | tornado                    | SQL Truncation Attack, ejecución remota de comandos, abuso de permisos sudo                      | Medium     |
-| 10  | medusa                     | LFI, log poisoning, fuerza bruta SSH, volcado de memoria, análisis de archivos cifrados          | Easy               |
+| Nº  | Nombre de la Máquina       | Vulnerabilidades Principales                                                                     | Dificultad | Link a la máquina |
+|-----|----------------------------|--------------------------------------------------------------------------------------------------|------------|-------------------|
+| 00  | simple                     | SMB mal configurado, servicios web expuestos, escalada de privilegios en Windows                 | Easy       |[HMV](https://hackmyvm.eu/machines/machine.php?vm=Simple) |
+| 01  | whitedoor                  | FTP anónimo, explotación web (credenciales), escalada de privilegios en Linux                    | Easy       |[HMV](https://hackmyvm.eu/machines/machine.php?vm=Whitedoor) |
+| 02  | talk                       | SQL Injection, escalada de privilegios en Linux                                                  | Easy       |[HMV](https://hackmyvm.eu/machines/machine.php?vm=Talk) |
+| 03  | preload                    | Server-Side Template Injection (SSTI) en Flask, RCE, escalada a root                             | Easy       |[HMV](https://hackmyvm.eu/machines/machine.php?vm=Preload) |
+| 04  | system                     | XXE (XML External Entity), acceso vía SSH, Python Library Hijacking                              | Easy       |[HMV](https://hackmyvm.eu/machines/machine.php?vm=System) |
+| 05  | faust                      | CMS Made Simple 2.2.5 vulnerable, tarea automatizada mal configurada, RCE                        | Easy       |[HMV](https://hackmyvm.eu/machines/machine.php?vm=Faust) |
+| 06  | twisted                    | Esteganografía, abuse de capabilities, ingeniería inversa, escalada local de privilegios         | Easy       |[HMV](https://hackmyvm.eu/machines/machine.php?vm=Twisted) |
+| 07  | visions                    | Metadatos con información sensible, contraseñas débiles, configuración insegura de sudo          | Easy       |[HMV](https://hackmyvm.eu/machines/machine.php?vm=Visions) |
+| 08  | driftingblues9             | Vulnerabilidades conocidas en web, análisis de binarios, buffer overflow (BOF)                   | Easy       |[HMV](https://hackmyvm.eu/machines/machine.php?vm=Driftingblues9) |
+| 09  | tornado                    | SQL Truncation Attack, ejecución remota de comandos, abuso de permisos sudo                      | Medium     |[HMV](https://hackmyvm.eu/machines/machine.php?vm=Tornado) |
+| 10  | medusa                     | LFI, log poisoning, fuerza bruta SSH, volcado de memoria, análisis de archivos cifrados          | Easy       |[HMV](https://hackmyvm.eu/machines/machine.php?vm=Medusa) |
 
 ---
 
